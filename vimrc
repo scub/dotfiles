@@ -4,8 +4,7 @@
 " REQUIRES mkdir -p ~/.vim/tmp ~/.vim/backup {
 set nobackup
 "set backupdir=~/.vim/backup
-set directory=$temp
-set dir=$temp
+set directory=.,/tmp
 " }
 "
 " Play Nice With Python 3, expand all tabs to 8 spaces {

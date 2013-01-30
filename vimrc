@@ -29,6 +29,7 @@ filetype on
 set nowrap              " No Line Wrapping (:set wrap to enable)
 set incsearch           " Search While Typing 
 set shell=bash
+set backspace=indent,eol,start " Fix Pesky Backspace Issue, To Function As Expected
 " }
 "
 " EOF

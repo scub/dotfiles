@@ -1,0 +1,7 @@
+#Disable scrollbar
+urxvt*background:       #00000000
+urxvt*foreground:       white
+
+URxvt.transparent:      true
+URxvt.shading:          20
+URxvt.scrollBar:        false

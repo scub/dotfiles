@@ -12,7 +12,7 @@
 # Print Application Usage
 function print_usage() {
         echo -en "Usage: ./install.sh -[iwh]\n\t-i\tDrop Bash Env, (bashrc,vimrc,tmux.conf)\n"
-        echo -en "\t-t\tDrop i3 configs including .Xdefaults and .xinitrc\n"
+        echo -en "\t-w\tDrop i3 configs including .Xdefaults and .xinitrc\n"
         echo -en "\t-h\tPrint Script Usage\n\n"
 }
 
@@ -37,10 +37,10 @@ function drop_i3() {
 while getopts ":iw" flag; do
         case $flag in
                 i)
-                        install_bashenv >&2
+                        drop_bashenv >&2
                         ;;
                 w) 
-                        install_i3 >&2
+                        drop_i3 >&2
                         ;;
                 \?)
                         print_usage

@@ -30,8 +30,9 @@ function drop_i3() {
         fi
 
         cp -vr $PWD/i3/. $HOME/.i3
-        cp -vr $PWD/Xdefaults $HOME/.Xdefaults
-        cp -vr $PWD/xinitrc $HOME/.xinitrc        
+        cp -v $PWD/Xdefaults $HOME/.Xdefaults
+        cp -v $PWD/Xresources $HOME/.Xresources
+        cp -v $PWD/xinitrc $HOME/.xinitrc        
 }
 
 while getopts ":iw" flag; do

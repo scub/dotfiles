@@ -127,7 +127,7 @@ bindsym $mod+r mode "resize"
 
 # i3status
 bar {
-        status_command          i3status -c /home/eip/.i3/i3status.conf
+        status_command          i3status -c ~/.i3/i3status.conf
         position                top
         mode                    hide
         modifier                $mod

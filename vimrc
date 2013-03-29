@@ -17,6 +17,7 @@ retab
 " STFU {
 set noerrorbells
 set visualbell
+set nohlsearch
 set t_vb=
 " }
 "
@@ -32,7 +33,7 @@ set shell=bash
 set backspace=indent,eol,start " Fix Pesky Backspace Issue, To Function As Expected
 
 
-map <C-F> :set hls! <bar> set hls?<CR> " Toggle hilights on ctrl+f
+map <C-F> :set hls! <bar> set hls?<CR> " Toggle hilights on ctrl+f 
 " }
 "
 " EOF

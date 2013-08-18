@@ -24,6 +24,11 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+
+# Quick CLI Pasting
+alias snip="curl -F 'paste=<-' http://s.drk.sc"
+alias gnsip='git diff | snip'
+
 # Quick HTTP Server
 alias pyserv='python -c "import SimpleHTTPServer, SocketServer, BaseHTTPServer; SimpleHTTPServer.test(SimpleHTTPServer.SimpleHTTPRequestHandler, type('"'"'Server'"'"', (BaseHTTPServer.HTTPServer, SocketServer.ThreadingMixIn, object), {}))" 9090'
 

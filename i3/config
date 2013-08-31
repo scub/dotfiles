@@ -142,3 +142,7 @@ new_window none
 bindsym $mod+t border normal
 bindsym $mod+y border 1pixel
 bindsym $mod+u border none
+
+## Volume Control [ Pulse Audio ]
+bindsym $mod+Ctrl+Up exec pactl set-sink-volume 0 +5%
+bindsym $mod+Ctrl+Down exec pactl set-sink-volume 0 -- -5%

@@ -52,3 +52,9 @@ touche() {
 	touch $*
 	chmod 700 $*
 }
+
+# Quickly Generate Password of given length, defaults to 10 characters
+genpass() {
+        test -z "$1" && LENGTH=10 || LENGTH=$1
+        python -c "from random import choice; import string; print ''.join( [ choice( string.printable.split( '\"')[0] ) for x in range( $LENGTH ) ] );"
+}

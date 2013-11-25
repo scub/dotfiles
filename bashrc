@@ -34,6 +34,7 @@ alias pyserv='python -c "import SimpleHTTPServer, SocketServer, BaseHTTPServer; 
 
 # Alert for long running cmds. Usage: sleep 1; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1| sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias ialert='i3-nagbar -m "[$?] Job Completed ($( echo -n $( history | tail -n2 | head -n1 | cut -d\  -f 4- ) )")'
 
 ## FUNCTIONS
 # Disassemble binary into opcodes

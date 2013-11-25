@@ -7,9 +7,10 @@ set nobackup
 set directory=.,/tmp
 " }
 "
-" Play Nice With Configs 
+" TABS { 
 set softtabstop=2
 set tabstop=2
+set shiftwidth=2
 set expandtab
 retab
 " }
@@ -27,15 +28,14 @@ filetype on
 " }
 "
 " ETC {
-set nowrap              " No Line Wrapping (:set wrap to enable)
-set incsearch           " Search While Typing 
-set shell=bash
+set nowrap                     " No Line Wrapping (:set wrap to enable)
+set incsearch                  " Search While Typing 
+set shell=bash                 " bash shell for !commands
 set backspace=indent,eol,start " Fix Pesky Backspace Issue, To Function As Expected
 
 map <C-F> :set hls! <bar> set hls?<CR> " Toggle hilights on ctrl+f 
 
 if has("autocmd")
-  filetype on
   autocmd filetype python set ts=4 sts=4 sw=4 et
   autocmd filetype bash set ts=4 sts=4 sw=4 et
   autocmd filetype puppet set ts=2 sts=2 sw=2 et

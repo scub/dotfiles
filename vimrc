@@ -28,6 +28,7 @@ filetype on
 " }
 "
 " ETC {
+set smartindent                " Enable Auto-Indents
 set nowrap                     " No Line Wrapping (:set wrap to enable)
 set incsearch                  " Search While Typing 
 set shell=bash                 " bash shell for !commands

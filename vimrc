@@ -22,9 +22,10 @@ set nohlsearch
 set t_vb=
 " }
 "
-" SYNTAX HIGHLIGHTS {
+" Highlights {
 syntax enable
 filetype on
+hi Comment ctermfg=darkcyan    " Lets Make Comments Readable
 " }
 "
 " ETC {

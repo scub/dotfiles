@@ -10,11 +10,20 @@ umask 077
 
 # Path
 if [ ! -e $HOME/sbin ]; then
-        mkdir $HOME/sbin
+  mkdir $HOME/sbin
 fi
 
 PATH=$PATH:$HOME/sbin/
 export PATH
+
+# [TMUX] If were in tmux set the window name to our host
+if [ "$TERM" == "screen-256color" ] ||
+   [ "$TERM" == "screen" ] ||
+   [ "$TERM" == "tmux" ]; then
+
+   printf "\033k$(hostname -s)\033\\"  
+
+fi 
 
 # Custom Bindings 
 bind '"\ea\ed"':"\"echo 'Auto Destruct Sequence Has Been Activated!!!'\C-m\""

@@ -25,7 +25,7 @@ set t_vb=
 " Highlights {
 syntax enable
 filetype on
-hi Comment ctermfg=darkcyan    " Lets Make Comments Readable
+hi Comment ctermfg=yellow    " Lets Make Comments Readable
 " }
 "
 " ETC {

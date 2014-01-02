@@ -35,14 +35,18 @@ set incsearch                  " Search While Typing
 set shell=bash                 " bash shell for !commands
 set backspace=indent,eol,start " Fix Pesky Backspace Issue, To Function As Expected
 
-map <C-F> :set hls! <bar> set hls?<CR> " Toggle hilights on ctrl+f 
-
 if has("autocmd")
   autocmd filetype python set ts=4 sts=4 sw=4 et
   autocmd filetype bash set ts=4 sts=4 sw=4 et
   autocmd filetype puppet set ts=2 sts=2 sw=2 et
 endif
 " }
+"
+" MAPPINGS {
+map <C-F> :set hls! <bar> set hls?<CR> " Toggle hilights on ctrl+f 
+map + <C-W>+                           " Quickly Expand Window Height (+)
+map - <C-W>-                           " Quickly Shrink Window Height (-) 
+" } 
 "
 " METHODS {
 function Pie ()

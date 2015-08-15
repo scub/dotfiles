@@ -74,3 +74,11 @@ genpass() {
         test -z "$1" && LENGTH=10 || LENGTH=$1
         python -c "from random import choice; import string; print ''.join( [ choice( string.printable.split( '\"')[0] ) for x in range( $LENGTH ) ] );"
 }
+
+# PS1 Extension - get current branch
+git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+# PS1
+export PS1='\u@\h:\W\[\e[0;32m\]$(git_branch)\[\e[m\]$ '

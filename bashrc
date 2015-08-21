@@ -32,6 +32,9 @@ bind '"\ea\ed"':"\"echo 'Auto Destruct Sequence Has Been Activated!!!'\C-m\""
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias s='/usr/bin/ssh'
+
+# Force input to bottom of terminal 
 alias clear='clear; tput cup $LINES 0'
 
 # Quick CLI Pasting

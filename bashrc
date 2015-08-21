@@ -28,11 +28,11 @@ fi
 # Custom Bindings 
 bind '"\ea\ed"':"\"echo 'Auto Destruct Sequence Has Been Activated!!!'\C-m\""
 
-## ALIAS
+## Quick Aliases
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-
+alias clear='clear; tput cup $LINES 0'
 
 # Quick CLI Pasting
 alias snip="curl -F 'paste=<-' http://s.drk.sc"

@@ -32,9 +32,13 @@ function drop_i3() {
         fi
 
         cp -vr $PWD/i3/. $HOME/.i3
-        cp -v $PWD/Xdefaults $HOME/.Xdefaults
-        cp -v $PWD/Xresources $HOME/.Xresources
-        cp -v $PWD/xinitrc $HOME/.xinitrc        
+        cp -v $PWD/xorg/Xdefaults $HOME/.Xdefaults
+        cp -v $PWD/xorg/Xresources $HOME/.Xresources
+        cp -v $PWD/xorg/xinitrc $HOME/.xinitrc
+
+	# Sort our font out
+	cp -v $PWD/xorg/liberation-font /usr/local/share/fonts/liberation
+	fc-cache /usr/local/share/fonts/
 }
 
 # Check Execution Environment For Tools

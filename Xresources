@@ -1,0 +1,7 @@
+# Default Font - Liberation Mono
+URxvt.font: xft:Liberation Mono:size=12
+
+# Add some xclip action
+URxvt.clipboard.copycmd: xclip -i
+URxvt.clipboard.pastecmd: xclip -o
+

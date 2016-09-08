@@ -29,10 +29,15 @@ fi
 bind '"\ea\ed"':"\"echo 'Auto Destruct Sequence Has Been Activated!!!'\C-m\""
 
 ## Quick Aliases
+alias ..='cd ..'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias s='/usr/bin/ssh'
+alias agu='sudo apt-get update; sudo apt-get upgrade -y'
+alias agi='sudo apt-get install'
+alias acs='sudo apt-cache search'
+alias acp='sudo apt-cache policy'
 
 # Force input to bottom of terminal 
 alias clear='clear; tput cup $LINES 0'

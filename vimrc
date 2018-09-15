@@ -12,7 +12,7 @@ set softtabstop=2
 set tabstop=2
 set shiftwidth=2
 set expandtab
-retab
+"retab               " :trollface:
 " }
 "
 " STFU {
@@ -22,10 +22,11 @@ set nohlsearch
 set t_vb=
 " }
 "
-" Highlights {
-syntax enable
+" Highlights and colorscheme {
+syntax on
 filetype on
 hi Comment ctermfg=yellow    " Lets Make Comments Readable
+colorscheme elflord
 " }
 "
 " ETC {
@@ -34,6 +35,7 @@ set nowrap                     " No Line Wrapping (:set wrap to enable)
 set incsearch                  " Search While Typing 
 set shell=bash                 " bash shell for !commands
 set backspace=indent,eol,start " Fix Pesky Backspace Issue, To Function As Expected
+set mouse-=a                   " OSX: Keep mouse from interactive with vim
 
 if has("autocmd")
   autocmd filetype python set ts=4 sts=4 sw=4 et

@@ -169,16 +169,6 @@ if [ -s "${TEST_KITCHEN}" ]; then
   alias kd="${TEST_KITCHEN} destroy"
 fi
 
-
-# Alert for long running cmds. Usage: sleep 1; alert
-if [ -s "$(which say)" ]; then
-  alias alert="say $*"
-else
-  alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1| sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-fi
-
-alias ialert='i3-nagbar -m "[$?] Job Completed ($( echo -n $( history | tail -n2 | head -n1 | cut -d\  -f 4- ) )")'
-
 # VirtualBox aliasing
 VBOXMAN="$(which VBoxManage)"
 if [ -s "${VBOXMAX}" ]; then
@@ -191,6 +181,15 @@ fi
 
 
 ### Arbitrary functions
+
+# Alert for long running cmds. Usage: sleep 1; alert
+if [ -s "$(which say)" ]; then
+  alias alert="say $*"
+else
+  alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1| sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+fi
+
+alias ialert='i3-nagbar -m "[$?] Job Completed ($( echo -n $( history | tail -n2 | head -n1 | cut -d\  -f 4- ) )")'
 
 # build single csv string from \n delimited file
 csv() {

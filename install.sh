@@ -20,9 +20,9 @@ function print_usage() {
 
 # Drop Bash Environment Configs
 function drop_bashenv() {
-        cp -vr $PWD/vimrc $HOME/.vimrc
-        cp -vr $PWD/bashrc $HOME/.bashrc
-        cp -vr $PWD/tmux.conf $HOME/.tmux.conf
+        ln -s $PWD/vimrc $HOME/.vimrc
+        ln -s $PWD/bashrc $HOME/.bashrc
+        ln -s $PWD/tmux.conf $HOME/.tmux.conf
 }
 
 # Drop i3 Configs, including .Xdefaults and .xinitrc

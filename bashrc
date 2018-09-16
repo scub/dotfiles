@@ -12,8 +12,9 @@
 [[ -s "/etc/bashrc" ]] && . /etc/bashrc
 
 # python3 -m venv $HOME/space/global_python3_venv
-[[ -d "$HOME/space/global_python3_venv" ]] && source $HOME/space/global_python3_venv/bin/activate
-
+[[ -z "${VIRTUAL_ENV}"  ]] && \
+  [[ -d "$HOME/space/global_python3_venv" ]] && \
+    source $HOME/space/global_python3_venv/bin/activate
 
 ### PS1 Extensions
 # PS1 shrug and table flip

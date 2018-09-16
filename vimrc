@@ -30,6 +30,7 @@ colorscheme elflord
 " }
 "
 " ETC {
+set ruler                      " Enable ruler
 set smartindent                " Enable Auto-Indents
 set nowrap                     " No Line Wrapping (:set wrap to enable)
 set incsearch                  " Search While Typing 

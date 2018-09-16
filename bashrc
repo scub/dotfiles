@@ -17,7 +17,7 @@
 
 ### PS1 Extensions
 # PS1 shrug and table flip
-export PS1=' \w $(git_info)\n   |___ $(ps1_reacji_shrug) $ '
+export PS1='$(cur_python_venv) \w $(git_info)\n   |___ $(ps1_reacji_shrug) $ '
 
 # PS1 bear and table flip
 #export PS1=' \w $(git_info)\n   |___ $(ps1_reacji_bear) $ '
@@ -60,6 +60,15 @@ ps1_reacji_bear() {
   OLDRETVAL=$?
   test ${OLDRETVAL} -eq 0 && \
     echo -e "${BLUE}ʕ ㅇ ᴥ ㅇʔ${CLEAR} (${OLDRETVAL})" || echo -e "${RED}ʕノ•ᴥ•ʔノ ︵ ┻━┻${CLEAR} (${OLDRETVAL})"
+}
+
+cur_python_venv(){
+    OLDRETVAL=$?
+    if [ ! -z "${VIRTUAL_ENV}" ]; then
+        venv_name=$( echo ${VIRTUAL_ENV} | awk -F '/' '{ print $NF }' )
+        echo -en "(${ORANGE}${venv_name}${CLEAR})"
+    fi
+    exit ${OLDRETVAL}
 }
 
 # Proper umask

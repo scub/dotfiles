@@ -138,6 +138,7 @@ if [ -s "$(which git)" ]; then
   alias gs='git status'
   alias gsu='git status -uno'
   alias gg='git grep'
+  alias glo='git log --oneline'
   alias gc='git checkout master ; git pull --rebase upstream master ; git push origin master'
   alias gscpp="git stash ; git checkout master ; git pull --rebase upstream master ; git push origin master"
   alias gcpp="git checkout master ; git pull --rebase upstream master ; git push origin master"

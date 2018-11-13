@@ -1,8 +1,8 @@
 # .rawrusrc
 
 ### Source global definitions
-export HAPMOJI=("¯\_(ツ)_/¯" "ʕᵔᴥᵔʔ" "ヽ(´ー｀)ノ" "☜(⌒▽⌒)☞" "( ͡° ͜ʖ ͡°)" "(づ￣ ³￣)づ" "◔_◔" "ԅ(≖‿≖ԅ)" "{•̃_•̃}" "(∩｀-´)⊃━☆ﾟ.*･｡ﾟ" "(っ▀¯▀)" "ヽ( •_)ᕗ")
-export SADMOJI=("[¬º-°]¬" "(Ծ‸ Ծ)" "(҂◡_◡)" "ミ●﹏☉ミ" "(⊙_◎)" "(´･_･\`)" "(⊙.☉)7" "⊙﹏⊙" "ᕦ(ò_óˇ)ᕤ" "ε=ε=ε=┌(;*´Д\`)ﾉ" "ლ(｀ー´ლ)" "ʕ •\`ᴥ•´ʔ" "ʕノ•ᴥ•ʔノ ︵ ┻━┻")
+export HAPMOJI=("¯\_(ツ)_/¯" "ʕᵔᴥᵔʔ" "ヽ(´ー｀)ノ" "☜(⌒▽⌒)☞" "( ͡° ͜ʖ ͡°)" "(づ￣ ³￣)づ" "◔_◔" "ԅ(≖‿≖ԅ)" "{•̃_•̃}" "(∩｀-´)⊃━☆ﾟ.*･｡ﾟ" "(っ▀¯▀)" "ヽ( •_)ᕗ" "⊂二二二（　＾ω＾）二⊃" "( ﾟヮﾟ)")
+export SADMOJI=("[¬º-°]¬" "(Ծ‸ Ծ)" "(҂◡_◡)" "ミ●﹏☉ミ" "(⊙_◎)" "(´･_･\`)" "(⊙.☉)7" "⊙﹏⊙" "ᕦ(ò_óˇ)ᕤ" "ε=ε=ε=┌(;*´Д\`)ﾉ" "ლ(｀ー´ლ)" "ʕ •\`ᴥ•´ʔ" "ʕノ•ᴥ•ʔノ ︵ ┻━┻" "(；一_一)" "(ー_ー)!!" "┐('～\`；)┌" "（ つ Д ｀）" "Σ(゜д゜;)")
 
 # Add local ~/sbin to PATH if it exists
 [[ -s "$HOME/sbin" ]] && export PATH="$PATH:~/sbin"
@@ -20,10 +20,7 @@ export SADMOJI=("[¬º-°]¬" "(Ծ‸ Ծ)" "(҂◡_◡)" "ミ●﹏☉ミ" "(⊙
 
 ### PS1 Extensions
 # PS1 shrug and table flip
-export PS1='$(cur_python_venv) \w $(git_info)\n   |___ $(ps1_reacji_shrug) $ '
-
-# PS1 bear and table flip
-#export PS1=' \w $(git_info)\n   |___ $(ps1_reacji_bear) $ '
+export PS1='$(cur_python_venv) \w $(git_info)\n   |___ $(ps1_reacji) $ '
 
 # Get git-branch and current HEAD
 git_info() {
@@ -53,7 +50,7 @@ cur_git_commit() {
 }
 
 # Exit code reactions
-ps1_reacji_shrug() {
+ps1_reacji() {
   OLDRETVAL=$?
   test ${OLDRETVAL} -eq 0 && \
     echo -e "${BLUE}${HAPMOJI[$(((${RANDOM}%${#HAPMOJI[@]})))]}${CLEAR} (${OLDRETVAL})" || echo -e "${RED}${SADMOJI[$(((${RANDOM}%${#SADMOJI[@]})))]}${CLEAR} (${OLDRETVAL})"

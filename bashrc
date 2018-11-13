@@ -57,12 +57,6 @@ ps1_reacji() {
   exit ${OLDRETVAL}
 }
 
-ps1_reacji_bear() {
-  OLDRETVAL=$?
-  test ${OLDRETVAL} -eq 0 && \
-    echo -e "${BLUE}ʕ ㅇ ᴥ ㅇʔ${CLEAR} (${OLDRETVAL})" || echo -e "${RED}ʕノ•ᴥ•ʔノ ︵ ┻━┻${CLEAR} (${OLDRETVAL})"
-}
-
 cur_python_venv(){
     OLDRETVAL=$?
     if [ ! -z "${VIRTUAL_ENV}" ]; then

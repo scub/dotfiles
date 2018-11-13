@@ -162,6 +162,8 @@ if [ -s "${VAGRANT}" ]; then
   alias vu="${VAGRANT} up"
   alias vup="${VAGRANT} up --provision"
   alias vp="${VAGRANT} provision"
+else
+  echo "[!] ${RED}vagrant${CLEAR} is not available, go see vagrantup.com. :<"
 fi
 
 # Test-kitchen aliases
@@ -173,14 +175,32 @@ if [ -s "${TEST_KITCHEN}" ]; then
     if [ $# -gt 0 ]; then
       ${TEST_KITCHEN} login ${*}
     else
-      kitchen list
+      ${TEST_KITCHEN} list
     fi
   }
 
+  # Kitchen-ci login/list
+  kcil() {
+    if [ $# -gt 0 ]; then
+      KITCHEN_YML="./.kitchen-ci.yml" ${TEST_KITCHEN} login ${*}
+    else
+      KITCHEN_YML="./.kitchen-ci.yml" ${TEST_KITCHEN} list
+    fi
+  }
+
+  # Local quickies
   alias kt="${TEST_KITCHEN} test"
   alias kv="${TEST_KITCHEN} verify"
   alias kc="${TEST_KITCHEN} converge"
   alias kd="${TEST_KITCHEN} destroy"
+
+  # Kitchen-ci expansions
+  alias kcit="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} test"
+  alias kciv="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} verify"
+  alias kcic="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} converge"
+  alias kcid="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} destroy"
+else
+  echo "[!] ${RED}test-kitchen${CLEAR} is not available, install with `gem install test-kitchen`. :<"
 fi
 
 # VirtualBox aliasing
@@ -191,8 +211,9 @@ if [ -s "${VBOXMAX}" ]; then
   alias vbmm="${VBOXMAN} modifyvm"
   alias vbmc="${VBOXMAN} controlvm"
   alias vbms="${VBOXMAN} startvm"
+else
+  echo "[!] ${RED}VirtualBox${CLEAR} is not available check out virtualbox.org. :<"
 fi
-
 
 ### Arbitrary functions
 

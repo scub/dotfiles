@@ -165,6 +165,8 @@ if [ -s "${VAGRANT}" ]; then
 fi
 
 # Test-kitchen aliases
+## All "kci*" aliases assume that a valid API key
+## is present in your env() as ${LINODE_API_KEY}.
 TEST_KITCHEN="$(which kitchen)"
 if [ -s "${TEST_KITCHEN}" ]; then
 

@@ -1,5 +1,6 @@
 # .rawrusrc
 
+
 ### Source global definitions
 export HAPMOJI=("¯\_(ツ)_/¯" "ʕᵔᴥᵔʔ" "ヽ(´ー｀)ノ" "☜(⌒▽⌒)☞" "( ͡° ͜ʖ ͡°)" "(づ￣ ³￣)づ" "◔_◔" "ԅ(≖‿≖ԅ)" "{•̃_•̃}" "(∩｀-´)⊃━☆ﾟ.*･｡ﾟ" "(っ▀¯▀)" "ヽ( •_)ᕗ")
 export SADMOJI=("[¬º-°]¬" "(Ծ‸ Ծ)" "(҂◡_◡)" "ミ●﹏☉ミ" "(⊙_◎)" "(´･_･\`)" "(⊙.☉)7" "⊙﹏⊙" "ᕦ(ò_óˇ)ᕤ" "ε=ε=ε=┌(;*´Д\`)ﾉ" "ლ(｀ー´ლ)" "ʕ •\`ᴥ•´ʔ" "ʕノ•ᴥ•ʔノ ︵ ┻━┻")
@@ -196,7 +197,7 @@ if [ -s "${TEST_KITCHEN}" ]; then
   alias kciv "KITCHEN_YML='./kitchen-ci.yml' ${TEST_KITCHEN} verify"
   alias kcic "KITCHEN_YML='./kitchen-ci.yml' ${TEST_KITCHEN} converge"
   alias kcid "KITCHEN_YML='./kitchen-ci.yml' ${TEST_KITCHEN} destroy"
-f
+fi
 
 # VirtualBox aliasing
 VBOXMAN="$(which VBoxManage)"

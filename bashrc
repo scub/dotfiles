@@ -175,7 +175,15 @@ if [ -s "${TEST_KITCHEN}" ]; then
     if [ $# -gt 0 ]; then
       ${TEST_KITCHEN} login ${*}
     else
-      kitchen list
+      ${TEST_KITCHEN} list
+    fi
+  }
+
+  kcil() {
+    if [ $# -gt 0 ]; then
+      KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} login ${*}
+    else
+      KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} list
     fi
   }
 
@@ -183,7 +191,12 @@ if [ -s "${TEST_KITCHEN}" ]; then
   alias kv="${TEST_KITCHEN} verify"
   alias kc="${TEST_KITCHEN} converge"
   alias kd="${TEST_KITCHEN} destroy"
-fi
+
+  alias kcit "KITCHEN_YML='./kitchen-ci.yml' ${TEST_KITCHEN} test"
+  alias kciv "KITCHEN_YML='./kitchen-ci.yml' ${TEST_KITCHEN} verify"
+  alias kcic "KITCHEN_YML='./kitchen-ci.yml' ${TEST_KITCHEN} converge"
+  alias kcid "KITCHEN_YML='./kitchen-ci.yml' ${TEST_KITCHEN} destroy"
+f
 
 # VirtualBox aliasing
 VBOXMAN="$(which VBoxManage)"

@@ -193,10 +193,10 @@ if [ -s "${TEST_KITCHEN}" ]; then
   alias kc="${TEST_KITCHEN} converge"
   alias kd="${TEST_KITCHEN} destroy"
 
-  alias kcit "KITCHEN_YML='./kitchen-ci.yml' ${TEST_KITCHEN} test"
-  alias kciv "KITCHEN_YML='./kitchen-ci.yml' ${TEST_KITCHEN} verify"
-  alias kcic "KITCHEN_YML='./kitchen-ci.yml' ${TEST_KITCHEN} converge"
-  alias kcid "KITCHEN_YML='./kitchen-ci.yml' ${TEST_KITCHEN} destroy"
+  alias kcit="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} test"
+  alias kciv="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} verify"
+  alias kcic="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} converge"
+  alias kcid="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} destroy"
 fi
 
 # VirtualBox aliasing

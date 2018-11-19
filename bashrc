@@ -17,9 +17,9 @@ export SADMOJI=("[¬º-°]¬" "(Ծ‸ Ծ)" "(҂◡_◡)" "ミ●﹏☉ミ" "(⊙
 [[ -s "/etc/bashrc" ]] && . /etc/bashrc
 
 # python3 -m venv $HOME/space/global_python3_venv
-[[ -z "${VIRTUAL_ENV}"  ]] && \
-  [[ -d "$HOME/space/global_python3_venv" ]] && \
-    source $HOME/space/global_python3_venv/bin/activate
+[[ -z "${VIRTUAL_ENV}" ]] && \
+  [[ -d "$HOME/space/state/global_python3_venv" ]] && \
+    source $HOME/space/state/global_python3_venv/bin/activate
 
 # ruby: non-system gem environment
 [[ -s "$(which ruby)" && -s "$(which gem)" ]] && \

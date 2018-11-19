@@ -21,6 +21,13 @@ export SADMOJI=("[¬º-°]¬" "(Ծ‸ Ծ)" "(҂◡_◡)" "ミ●﹏☉ミ" "(⊙
   [[ -d "$HOME/space/global_python3_venv" ]] && \
     source $HOME/space/global_python3_venv/bin/activate
 
+# ruby: non-system gem environment
+[[ -s "$(which ruby)" && -s "$(which gem)" ]] && \
+  [[ -d "$HOME/space/state/ruby_env" ]] && \
+    export GEM_PATH="$HOME/space/state/ruby_env" && \
+    export GEM_HOME="$HOME/space/state/ruby_env" && \
+    export PATH="$PATH:$HOME/space/state/ruby_env"
+
 ### PS1 Extensions
 # PS1 shrug and table flip
 export PS1='$(get_host_identity) - $(cur_python_venv) \w $(git_info)\n   |___ $(ps1_reacji) $ '

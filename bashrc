@@ -55,6 +55,12 @@ cur_git_commit() {
   exit ${OLDRETVAL}
 }
 
+get_host_identity() {
+  OLDRETVAL=$?
+  echo -e "${ORANGE}<[${DARK_YELLOW}$(hostname -s)${ORANGE}]>${CLEAR}"
+  exit ${OLDRETVAL}
+}
+
 # Exit code reactions
 ps1_reacji_shrug() {
   OLDRETVAL=$?

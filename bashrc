@@ -264,7 +264,6 @@ genpass() {
   python -c "from random import choice; import string; print ''.join( [ choice( string.printable.split( '\"')[0] ) for x in range( $LENGTH ) ] );"
 }
 
-
 ### Text Color
 RED="\033[31m"
 DARK_YELLOW="\033[33m"
@@ -273,3 +272,5 @@ BLUE="\033[34m"
 MAGENTA="\033[35m"
 ORANGE="\033[91m"
 CLEAR="\033[0m"
+
+clear

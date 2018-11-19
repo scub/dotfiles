@@ -23,10 +23,7 @@ export SADMOJI=("[¬º-°]¬" "(Ծ‸ Ծ)" "(҂◡_◡)" "ミ●﹏☉ミ" "(⊙
 
 ### PS1 Extensions
 # PS1 shrug and table flip
-export PS1='$(cur_python_venv) \w $(git_info)\n   |___ $(ps1_reacji_shrug) $ '
-
-# PS1 bear and table flip
-#export PS1=' \w $(git_info)\n   |___ $(ps1_reacji_bear) $ '
+export PS1='$(get_host_identity) - $(cur_python_venv) \w $(git_info)\n   |___ $(ps1_reacji) $ '
 
 # Get git-branch and current HEAD
 git_info() {
@@ -62,7 +59,7 @@ get_host_identity() {
 }
 
 # Exit code reactions
-ps1_reacji_shrug() {
+ps1_reacji() {
   OLDRETVAL=$?
   test ${OLDRETVAL} -eq 0 && \
     echo -e "${BLUE}${HAPMOJI[$(((${RANDOM}%${#HAPMOJI[@]})))]}${CLEAR} (${OLDRETVAL})" || echo -e "${RED}${SADMOJI[$(((${RANDOM}%${#SADMOJI[@]})))]}${CLEAR} (${OLDRETVAL})"

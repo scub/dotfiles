@@ -20,6 +20,71 @@ function print_usage() {
 
 # Drop Bash Environment Configs
 function drop_bashenv() {
+
+        # Various environments are all kept within the environments
+        # general workspace. This keeps the system defaults untouched
+        # and quick reversion without system damage easy.
+        #
+        # Quick note about default bias:
+        #   - Python: python3 is preferred over python2
+        #             by default despite system defaults.
+        #   - Ruby: Gems move away from system default, however
+        #           the system intepreter is preferred.
+        #
+        [[ -d "$HOME/space/state" ]] || (mkdir -p $HOME/space/state && echo "created $HOME/space/state for environments")
+        
+        # If python3 is a thing make our python3
+        # environment if it doesn't exist
+        if [ -e $(which python3) ]; then
+          if [ ! -d $HOME/space/state/global_python3_venv ]; then
+            echo "Creating python3 environment in $HOME/space/state/global_python3_env"
+            mkdir -p $HOME/space/state/global_python3_venv
+            python3 -m venv $HOME/space/state/global_python3_venv
+          fi
+        fi
+
+        # If python2 is a thing make our python2
+        # environment if it doesn't exist. This
+        # stanza only fires if virtualenv exists.
+        if [ -e $(which python3) ]; then
+          if [ -e $(which virtualenv) ]; then
+            if [ ! -d $HOME/space/state/global_python2_venv ]; then
+              echo "Creating python2 environment in $HOME/space/state/global_python2_env"
+              mkdir -p $HOME/space/state/global_python2_venv
+              virtualenv $HOME/space/state/global_python2_venv
+            fi
+          else
+            echo '"virtualenv" is not installed within this environment'
+          fi
+        else
+          echo '"python" is not installed within this environment'
+        fi
+
+        # If python2 is a thing make our python2
+        # environment if it doesn't exist. This
+        # stanza only fires if virtualenv exists.
+        if [ -e $(which ruby) ]; then
+          if [ -e $(which gem) ]; then
+            if [ ! -d $HOME/space/state/ruby_env ]; then
+              mkdir -p $HOME/space/state/ruby_env
+            fi
+          else
+            echo '"gem" is not installed within this environment'
+          fi
+        else
+          echo '"ruby" is not installed within this environment'
+        fi
+
+
+        # Check for localrc overrides file, create it if not found
+        [[ -s "$HOME/.localrc" ]] || (touch $HOME/.localrc && echo "created $HOME:.localrc for local overrides")
+
+        # Move existing stuff out of the way if necessary
+        test -e $HOME/.vimrc && mv $HOME/.vimrc $HOME/.vimrc.$(date +%d%y%m%H%M).orig
+        test -e $HOME/.bashrc && mv $HOME/.bashrc $HOME/.bashrc.$(date +%d%y%m%H%M).orig
+        test -e $HOME/.tmux.conf && mv $HOME/.tmux.conf $HOME/.tmux.conf.$(date +%d%y%m%H%M).orig
+
+        # Symlink all environment files into place
         ln -s $PWD/vimrc $HOME/.vimrc
         ln -s $PWD/bashrc $HOME/.bashrc
         ln -s $PWD/tmux.conf $HOME/.tmux.conf

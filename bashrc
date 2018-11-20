@@ -1,9 +1,11 @@
 # .rawrusrc
 
-
 ### Source global definitions
 export HAPMOJI=("¯\_(ツ)_/¯" "ʕᵔᴥᵔʔ" "ヽ(´ー｀)ノ" "☜(⌒▽⌒)☞" "( ͡° ͜ʖ ͡°)" "(づ￣ ³￣)づ" "◔_◔" "ԅ(≖‿≖ԅ)" "{•̃_•̃}" "(∩｀-´)⊃━☆ﾟ.*･｡ﾟ" "(っ▀¯▀)" "ヽ( •_)ᕗ")
 export SADMOJI=("[¬º-°]¬" "(Ծ‸ Ծ)" "(҂◡_◡)" "ミ●﹏☉ミ" "(⊙_◎)" "(´･_･\`)" "(⊙.☉)7" "⊙﹏⊙" "ᕦ(ò_óˇ)ᕤ" "ε=ε=ε=┌(;*´Д\`)ﾉ" "ლ(｀ー´ლ)" "ʕ •\`ᴥ•´ʔ" "ʕノ•ᴥ•ʔノ ︵ ┻━┻")
+
+# Add local overrides ~/.localrc if it exists
+[[ -e "$HOME/.localrc" ]] && source ${HOME}/.localrc
 
 # Add local ~/sbin to PATH if it exists
 [[ -s "$HOME/sbin" ]] && export PATH="$PATH:~/sbin"
@@ -15,16 +17,20 @@ export SADMOJI=("[¬º-°]¬" "(Ծ‸ Ծ)" "(҂◡_◡)" "ミ●﹏☉ミ" "(⊙
 [[ -s "/etc/bashrc" ]] && . /etc/bashrc
 
 # python3 -m venv $HOME/space/global_python3_venv
-[[ -z "${VIRTUAL_ENV}"  ]] && \
-  [[ -d "$HOME/space/global_python3_venv" ]] && \
-    source $HOME/space/global_python3_venv/bin/activate
+[[ -z "${VIRTUAL_ENV}" ]] && \
+  [[ -d "$HOME/space/state/global_python3_venv" ]] && \
+    source $HOME/space/state/global_python3_venv/bin/activate
+
+# ruby: non-system gem environment
+[[ -s "$(which ruby)" && -s "$(which gem)" ]] && \
+  [[ -d "$HOME/space/state/ruby_env" ]] && \
+    export GEM_PATH="$HOME/space/state/ruby_env" && \
+    export GEM_HOME="$HOME/space/state/ruby_env" && \
+    export PATH="$PATH:$HOME/space/state/ruby_env"
 
 ### PS1 Extensions
 # PS1 shrug and table flip
-export PS1='$(cur_python_venv) \w $(git_info)\n   |___ $(ps1_reacji_shrug) $ '
-
-# PS1 bear and table flip
-#export PS1=' \w $(git_info)\n   |___ $(ps1_reacji_bear) $ '
+export PS1='$(get_host_identity) - $(cur_python_venv) \w $(git_info)\n   |___ $(ps1_reacji) $ '
 
 # Get git-branch and current HEAD
 git_info() {
@@ -53,8 +59,14 @@ cur_git_commit() {
   exit ${OLDRETVAL}
 }
 
+get_host_identity() {
+  OLDRETVAL=$?
+  echo -e "${ORANGE}<[${DARK_YELLOW}$(hostname -s)${ORANGE}]>${CLEAR}"
+  exit ${OLDRETVAL}
+}
+
 # Exit code reactions
-ps1_reacji_shrug() {
+ps1_reacji() {
   OLDRETVAL=$?
   test ${OLDRETVAL} -eq 0 && \
     echo -e "${BLUE}${HAPMOJI[$(((${RANDOM}%${#HAPMOJI[@]})))]}${CLEAR} (${OLDRETVAL})" || echo -e "${RED}${SADMOJI[$(((${RANDOM}%${#SADMOJI[@]})))]}${CLEAR} (${OLDRETVAL})"
@@ -193,10 +205,10 @@ if [ -s "${TEST_KITCHEN}" ]; then
   alias kc="${TEST_KITCHEN} converge"
   alias kd="${TEST_KITCHEN} destroy"
 
-  alias kcit "KITCHEN_YML='./kitchen-ci.yml' ${TEST_KITCHEN} test"
-  alias kciv "KITCHEN_YML='./kitchen-ci.yml' ${TEST_KITCHEN} verify"
-  alias kcic "KITCHEN_YML='./kitchen-ci.yml' ${TEST_KITCHEN} converge"
-  alias kcid "KITCHEN_YML='./kitchen-ci.yml' ${TEST_KITCHEN} destroy"
+  alias kcit="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} test"
+  alias kciv="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} verify"
+  alias kcic="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} converge"
+  alias kcid="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} destroy"
 fi
 
 # VirtualBox aliasing
@@ -259,7 +271,6 @@ genpass() {
   python -c "from random import choice; import string; print ''.join( [ choice( string.printable.split( '\"')[0] ) for x in range( $LENGTH ) ] );"
 }
 
-
 ### Text Color
 RED="\033[31m"
 DARK_YELLOW="\033[33m"
@@ -268,3 +279,5 @@ BLUE="\033[34m"
 MAGENTA="\033[35m"
 ORANGE="\033[91m"
 CLEAR="\033[0m"
+
+clear

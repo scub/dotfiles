@@ -60,9 +60,9 @@ function drop_bashenv() {
           echo '"python" is not installed within this environment'
         fi
 
-        # If python2 is a thing make our python2
+        # If ruby is a thing make our ruby 
         # environment if it doesn't exist. This
-        # stanza only fires if virtualenv exists.
+        # stanza only fires if gem exists.
         if [ -e $(which ruby) ]; then
           if [ -e $(which gem) ]; then
             if [ ! -d $HOME/space/state/ruby_env ]; then

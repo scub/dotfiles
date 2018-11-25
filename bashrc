@@ -205,6 +205,7 @@ if [ -s "${TEST_KITCHEN}" ]; then
   alias kc="${TEST_KITCHEN} converge"
   alias kd="${TEST_KITCHEN} destroy"
 
+  alias kci="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN}"
   alias kcit="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} test"
   alias kciv="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} verify"
   alias kcic="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} converge"
@@ -269,6 +270,48 @@ te() {
 genpass() {
   test -z "$1" && LENGTH=10 || LENGTH=$1
   python -c "from random import choice; import string; print ''.join( [ choice( string.printable.split( '\"')[0] ) for x in range( $LENGTH ) ] );"
+}
+
+# Track how long it takes to clone or update a repo
+gittime() {
+  #
+  # Parameters: ( params prefixed with * are required arguments )
+  # * source  - repository source (git@github.com:scub/deploy-playground.git)
+  #   dest    - destination to clone repository to
+  #   verbose - report on more than just runtime
+  #
+  SOURCE=${1}
+  DEST=${2}
+  VERBOSE=${3}
+
+  # If no destination is provided infer what destination we will clone to
+  test -z "${DEST}" && DEST=$(echo ${SOURCE} | cut -d'/' -f2 | cut -d'.' -f1)
+
+  # Check to see if we should say things about what were going to do
+  if [ ! -z "${VERBOSE}" ]; then
+    echo -n 'Triggering '
+    test -d  ${DEST} && echo -n "update " || echo -n "clone "
+    echo -n "from source: ${SOURCE} to ${DEST}"
+    test -z "${VERBOSE}" && echo "without verbosity" || echo "with increased verbosity."
+  fi
+
+  if [ ! -d "${DEST}" ]; then
+    RESULTS=$( { time git clone ${SOURCE} ${DEST}; } 2>&1 )
+  else
+    pushd "${DEST}" 2>/dev/null
+    RESULTS=$( { time git pull --rebase origin master; } 2>&1 )
+    popd 2>/dev/null
+  fi
+
+  # Parse run-time from results (real)
+  RUNTIME=$(echo $RESULTS | egrep -i 'real' | awk -F 'real ' '{ print $2 }' | cut -d' ' -f1 )
+
+  if [ ! -z "${VERBOSE}" ]; then
+    echo -e "Full results:\n============\n\n${RESULTS}"
+    echo -e "============\n\n"
+  fi
+
+  echo -n "Runtime: ${RUNTIME}"
 }
 
 ### Text Color

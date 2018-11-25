@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+# vim: ft=bash
 #!/bin/bash
 #
 # [ 02/05/2013 ]
@@ -75,9 +77,8 @@ function drop_bashenv() {
           echo '"ruby" is not installed within this environment'
         fi
 
-
         # Check for localrc overrides file, create it if not found
-        [[ -s "$HOME/.localrc" ]] || (touch $HOME/.localrc && echo "created $HOME:.localrc for local overrides")
+        [[ -f "$HOME/.localrc" ]] || (cp $PWD/localrc $HOME/.localrc && echo "created $HOME:.localrc for local overrides")
 
         # Move existing stuff out of the way if necessary
         test -e $HOME/.vimrc && mv $HOME/.vimrc $HOME/.vimrc.$(date +%d%y%m%H%M).orig

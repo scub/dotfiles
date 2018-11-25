@@ -1,0 +1,8 @@
+# -*- coding: utf-8 -*-
+# vim: ft=bash
+#
+# .localrc -- Local environment variables/modifications
+#
+# Generally stuff you don't want to place into version control.
+#
+

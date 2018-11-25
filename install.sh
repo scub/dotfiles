@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+# vim: ft=bash
 #!/bin/bash
 #
 # [ 02/05/2013 ]

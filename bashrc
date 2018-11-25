@@ -234,6 +234,17 @@ fi
 
 alias ialert='i3-nagbar -m "[$?] Job Completed ($( echo -n $( history | tail -n2 | head -n1 | cut -d\  -f 4- ) )")'
 
+snotify() {
+  # Slack notifications from cli via webhook
+  PAYLOAD="{ 'text' : '${*}' }"
+  if [ ! -z "${SLACK_NOTIFY_HOOK}" ]; then
+    curl -X POST -H 'Content-type: application/json' \
+         --data "${PAYLOAD}" ${SLACK_NOTIFY_HOOK}
+  else
+    echo "No webhook was defined in env['SLACK_NOTIFY_HOOK'], I usually put this in my ~/.localrc."
+  fi
+}
+
 # build single csv string from \n delimited file
 csv() {
   if [ $# -eq 1 ]; then

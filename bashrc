@@ -204,12 +204,14 @@ if [ -s "${TEST_KITCHEN}" ]; then
   alias kv="${TEST_KITCHEN} verify"
   alias kc="${TEST_KITCHEN} converge"
   alias kd="${TEST_KITCHEN} destroy"
+  alias ke="${TEST_KITCHEN} exec"
 
   alias kci="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN}"
   alias kcit="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} test"
   alias kciv="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} verify"
   alias kcic="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} converge"
   alias kcid="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} destroy"
+  alias kcie="KITCHEN_YML='./.kitchen-ci.yml' ${TEST_KITCHEN} exec"
 fi
 
 # VirtualBox aliasing

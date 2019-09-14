@@ -1,3 +1,10 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
 # .rawrusrc
 
 ### Source global definitions
@@ -6,6 +13,9 @@ export SADMOJI=("[¬º-°]¬" "(Ծ‸ Ծ)" "(҂◡_◡)" "ミ●﹏☉ミ" "(⊙
 
 # Add local overrides ~/.localrc if it exists
 [[ -e "$HOME/.localrc" ]] && source ${HOME}/.localrc
+
+# Add local bash functions ~/.bash.local if it exists
+[[ -e "$HOME/.bash.local" ]] && source ${HOME}/.bash.local
 
 # Add local ~/sbin to PATH if it exists
 [[ -s "$HOME/sbin" ]] && export PATH="$PATH:~/sbin"
@@ -119,6 +129,8 @@ alias pyserv='python -c "import SimpleHTTPServer, SocketServer, BaseHTTPServer; 
 alias dsnip="curl -F 'paste=<-' http://s.drk.sc"
 alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
 
+# Quickly grab top level keys in json blob piped into stdin - ie: `echo "json" | jkeys`
+alias jkeys='python -c "import sys, json; false=False; true=True; x=json.loads(sys.stdin.readline()); print(x.keys())"'
 
 ### Application aliases
 
@@ -335,5 +347,7 @@ BLUE="\033[34m"
 MAGENTA="\033[35m"
 ORANGE="\033[91m"
 CLEAR="\033[0m"
+
+export PS1='$(get_host_identity) - $(cur_python_venv) \w $(git_info)\n   |___ $ '
 
 clear

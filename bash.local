@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#######
+#####
+###
+###   This file holds all local aliases which should not be committed.
+### These usually include anything considered potentially "sensitive"
+### in its content or functionality. This can also be used to export
+### environment specific variables which should not be committed back.
+###
+#####
+#######

@@ -84,11 +84,13 @@ function drop_bashenv() {
         test -e $HOME/.vimrc && mv $HOME/.vimrc $HOME/.vimrc.$(date +%d%y%m%H%M).orig
         test -e $HOME/.bashrc && mv $HOME/.bashrc $HOME/.bashrc.$(date +%d%y%m%H%M).orig
         test -e $HOME/.tmux.conf && mv $HOME/.tmux.conf $HOME/.tmux.conf.$(date +%d%y%m%H%M).orig
+        test -e $HOME/.local.ps1 && mv $HOME/.local.ps1 $HOME/.local.ps1.$(date +%d%y%m%H%M).orig
 
         # Symlink all environment files into place
         ln -s $PWD/vimrc $HOME/.vimrc
         ln -s $PWD/bashrc $HOME/.bashrc
         ln -s $PWD/tmux.conf $HOME/.tmux.conf
+        ln -s $PWD/local.ps1 $HOME/.local.ps1
 }
 
 # Drop i3 Configs, including .Xdefaults and .xinitrc

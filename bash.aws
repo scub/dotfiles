@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ecrlogin() {
+  eval $(aws ecr get-login --no-include-email)
+}

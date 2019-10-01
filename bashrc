@@ -1,6 +1,16 @@
 #
-# ~/.bashrc
+# Theres no shell like Skoobies ${HOME}/.bashrc
 #
+
+### Quick Color Definitions
+export RED="\033[31m"
+export DARK_YELLOW="\033[33m"
+export CYAN="\033[36m"
+export BLUE="\033[34m"
+export MAGENTA="\033[35m"
+export ORANGE="\033[91m"
+export CLEAR="\033[0m"
+
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -12,91 +22,45 @@ export HAPMOJI=("¯\_(ツ)_/¯" "ʕᵔᴥᵔʔ" "ヽ(´ー｀)ノ" "☜(⌒▽�
 export SADMOJI=("[¬º-°]¬" "(Ծ‸ Ծ)" "(҂◡_◡)" "ミ●﹏☉ミ" "(⊙_◎)" "(´･_･\`)" "(⊙.☉)7" "⊙﹏⊙" "ᕦ(ò_óˇ)ᕤ" "ε=ε=ε=┌(;*´Д\`)ﾉ" "ლ(｀ー´ლ)" "ʕ •\`ᴥ•´ʔ" "ʕノ•ᴥ•ʔノ ︵ ┻━┻")
 
 # Add local overrides ~/.localrc if it exists
-[[ -e "$HOME/.localrc" ]] && source ${HOME}/.localrc
+[[ -e "${HOME}/.localrc" ]] && source ${HOME}/.localrc
 
-# Add local bash functions ~/.bash.local if it exists
-[[ -e "$HOME/.bash.local" ]] && source ${HOME}/.bash.local
+# Add AWS functions if available
+[[ -e "${HOME}/.bash.aws" ]] && source ${HOME}/.bash.aws
 
 # Add local ~/sbin to PATH if it exists
-[[ -s "$HOME/sbin" ]] && export PATH="$PATH:~/sbin"
+[[ -s "${HOME}/sbin" ]] && export PATH="$PATH:~/sbin"
 
-# Set git editor to vim where available
-[[ -s "$(which vim)" && -s "$(which git)" ]] && export GIT_EDITOR=$(which vim)
+# Set EDITOR/GIT_EDITOR to vim where able and necessary
+[[ -s "$(which vim 2>/dev/null)" ]] &&          \
+  export EDITOR="$(which vim)" &&               \
+  [[ -s "$(which git 2>/dev/null)" ]] &&        \
+    export GIT_EDITOR=$(which vim 2>/dev/null)
 
 # Pull in system bashrc if it exists
 [[ -s "/etc/bashrc" ]] && . /etc/bashrc
 
-# python3 -m venv $HOME/space/global_python3_venv
+# python3 -m venv ${HOME}/space/global_python3_venv
 [[ -z "${VIRTUAL_ENV}" ]] && \
-  [[ -d "$HOME/space/state/global_python3_venv" ]] && \
-    source $HOME/space/state/global_python3_venv/bin/activate
+  [[ -d "${HOME}/space/state/global_python3_venv" ]] && \
+    source ${HOME}/space/state/global_python3_venv/bin/activate
 
-# ruby: non-system gem environment
-[[ -s "$(which ruby)" && -s "$(which gem)" ]] && \
-  [[ -d "$HOME/space/state/ruby_env" ]] && \
-    export GEM_PATH="$HOME/space/state/ruby_env" && \
-    export GEM_HOME="$HOME/space/state/ruby_env" && \
-    export PATH="$PATH:$HOME/space/state/ruby_env"
+# Import global ssh-agent
+[[ -e "/tmp/.global-ssh-agent" ]] && \
+  eval $(</tmp/.global-ssh-agent) 2>&1 > /dev/null
 
-### PS1 Extensions
-# PS1 shrug and table flip
-export PS1='$(get_host_identity) - $(cur_python_venv) \w $(git_info)\n   |___ $(ps1_reacji) $ '
-
-# Get git-branch and current HEAD
-git_info() {
-  OLDRETVAL=$?
-  # Any string means this guy is a repo
-  test -d $PWD/.git && \
-    echo -en "${ORANGE}$(git_branch)${CLEAR}\n   |$(cur_git_commit)\n"
-  exit ${OLDRETVAL}
-}
-
-# Grab current branch git branch if applicable
-git_branch() {
-  OLDRETVAL=$?
-  BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/' || echo '')
-  if [ -d "${PWD}/.git" ]; then
-    echo "${BRANCH}"
-  fi
-  exit ${OLDRETVAL}
-}
-
-# Grab current git commit
-cur_git_commit() {
-  OLDRETVAL=$?
-  CUR_COMMIT="$(git log --pretty=format:'%h' -n 1 2> /dev/null || echo '')"
-  test -z "${CUR_COMMIT}" && echo "" || echo -e "-[ Commit: ${ORANGE}${CUR_COMMIT}${CLEAR} ]"
-  exit ${OLDRETVAL}
-}
-
-get_host_identity() {
-  OLDRETVAL=$?
-  echo -e "${ORANGE}<[${DARK_YELLOW}$(hostname -s)${ORANGE}]>${CLEAR}"
-  exit ${OLDRETVAL}
-}
-
-# Exit code reactions
-ps1_reacji() {
-  OLDRETVAL=$?
-  test ${OLDRETVAL} -eq 0 && \
-    echo -e "${BLUE}${HAPMOJI[$(((${RANDOM}%${#HAPMOJI[@]})))]}${CLEAR} (${OLDRETVAL})" || echo -e "${RED}${SADMOJI[$(((${RANDOM}%${#SADMOJI[@]})))]}${CLEAR} (${OLDRETVAL})"
-  exit ${OLDRETVAL}
-}
-
-ps1_reacji_bear() {
-  OLDRETVAL=$?
-  test ${OLDRETVAL} -eq 0 && \
-    echo -e "${BLUE}ʕ ㅇ ᴥ ㅇʔ${CLEAR} (${OLDRETVAL})" || echo -e "${RED}ʕノ•ᴥ•ʔノ ︵ ┻━┻${CLEAR} (${OLDRETVAL})"
-}
-
-cur_python_venv(){
-    OLDRETVAL=$?
-    if [ ! -z "${VIRTUAL_ENV}" ]; then
-        venv_name=$( echo ${VIRTUAL_ENV} | awk -F '/' '{ print $NF }' )
-        echo -en "(${ORANGE}${venv_name}${CLEAR})"
-    fi
-    exit ${OLDRETVAL}
-}
+######
+#
+# CURRENTLY DEFUNCT AND LIABLE TO BRICK CONVENTIONAL INSTALLS
+# IMPLEMENTATION REQUIRES FURTHER STUDY BEFORE ENABLING.
+#
+# Ruby: non-system gem environment
+#
+#[[ -s "$(which ruby 2>/dev/null)" ]] && \
+#  [[ -s "$(which gem 2>/dev/null)" ]] && \
+#    [[ -d "${HOME}/space/state/ruby_env" ]] && \
+#      export GEM_PATH="${HOME}/space/state/ruby_env" && \
+#      export GEM_HOME="${HOME}/space/state/ruby_env" && \
+#      export PATH="$PATH:${HOME}/space/state/ruby_env"
 
 # Proper umask
 #umask 077
@@ -116,11 +80,17 @@ bind '"\ea\ed"':"\"echo 'Auto Destruct Sequence Has Been Activated!!!'\C-m\""
 # Remap clear to force shell stdin to the bottom
 alias clear='clear; tput cup $LINES 0'
 
+# Quick commands
 alias ..='cd ..'
+alias ocd='cd ${OLDPWD}'
+alias ls='ls --color=auto'
 alias ll='ls -alF'
 alias la='ls -A'
 alias le='less'
 alias l='ls -lisaG'
+
+# List top level keys ofjson object piped to me
+alias jkeys='python -c "import sys, json; false=False; true=True; x=json.loads(sys.stdin.readline()); print(x.keys())"'
 
 # Quick HTTP Server
 alias pyserv='python -c "import SimpleHTTPServer, SocketServer, BaseHTTPServer; SimpleHTTPServer.test(SimpleHTTPServer.SimpleHTTPRequestHandler, type('"'"'Server'"'"', (BaseHTTPServer.HTTPServer, SocketServer.ThreadingMixIn, object), {}))" 9090'
@@ -129,8 +99,6 @@ alias pyserv='python -c "import SimpleHTTPServer, SocketServer, BaseHTTPServer; 
 alias dsnip="curl -F 'paste=<-' http://s.drk.sc"
 alias sprunge="curl -F 'sprunge=<-' http://sprunge.us"
 
-# Quickly grab top level keys in json blob piped into stdin - ie: `echo "json" | jkeys`
-alias jkeys='python -c "import sys, json; false=False; true=True; x=json.loads(sys.stdin.readline()); print(x.keys())"'
 
 ### Application aliases
 
@@ -139,12 +107,17 @@ if [ -s "$(which ssh)" ]; then
   alias s=$(which ssh)
 fi
 
-if [ -s "$(which i2ssh)" ]; then
+if [ -s "$(which i2ssh 2>/dev/null)" ]; then
   alias i=$(which i2ssh)
 fi
 
-# APT shorties
-if [ -s "$(which apt-get)" ]; then
+# Arch-Linux shortcuts
+psearch() {
+  pacman -Ss $* | egrep -v '^\s+' | cut -d'/' -f2 | cut -d' ' -f1 | ccze -A
+}
+
+# Debian/Ubuntu shortcuts
+if [ -s "$(which apt-get 2>/dev/null)" ]; then
   alias agu='sudo apt-get update; sudo apt-get upgrade -y'
   alias agi='sudo apt-get install'
   alias acs='sudo apt-cache search'
@@ -171,7 +144,7 @@ if [ -s "$(which git)" ]; then
 fi
 
 # Vagrant aliases
-VAGRANT="$(which vagrant)"
+VAGRANT="$(which vagrant 2>/dev/null)"
 if [ -s "${VAGRANT}" ]; then
 
   # Vagrant status / Vagrant ssh
@@ -192,7 +165,7 @@ fi
 # Test-kitchen aliases
 ## All "kci*" aliases assume that a valid API key
 ## is present in your env() as ${LINODE_API_KEY}.
-TEST_KITCHEN="$(which kitchen)"
+TEST_KITCHEN="$(which kitchen 2>/dev/null)"
 if [ -s "${TEST_KITCHEN}" ]; then
 
   # Kitchen login/list
@@ -227,7 +200,7 @@ if [ -s "${TEST_KITCHEN}" ]; then
 fi
 
 # VirtualBox aliasing
-VBOXMAN="$(which VBoxManage)"
+VBOXMAN="$(which VBoxManage 2>/dev/null)"
 if [ -s "${VBOXMAX}" ]; then
   echo "Enabling vboxmanage"
   alias vbm="${VBOXMAN}"
@@ -240,7 +213,7 @@ fi
 ### Arbitrary functions
 
 # Alert for long running cmds. Usage: sleep 1; alert
-if [ -s "$(which say)" ]; then
+if [ -s "$(which say 2>/dev/null)" ]; then
   alias alert="say $*"
 else
   alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1| sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -271,7 +244,7 @@ csv() {
 
 # Break elfs into opcodes
 disas() {
-  GCC="$(which gcc)"
+  GCC="$(which gcc 2>/dev/null)"
   if [ -s "${GCC}" ]; then
 	   ${GCC} -pipe -S -o - -O -g $* | as -aldh -o /dev/null
   else
@@ -339,15 +312,6 @@ gittime() {
   echo -n "Runtime: ${RUNTIME}"
 }
 
-### Text Color
-RED="\033[31m"
-DARK_YELLOW="\033[33m"
-CYAN="\e[123m"
-BLUE="\033[34m"
-MAGENTA="\033[35m"
-ORANGE="\033[91m"
-CLEAR="\033[0m"
 
-export PS1='$(get_host_identity) - $(cur_python_venv) \w $(git_info)\n   |___ $ '
-
-clear
+### If our PS1 builder is alive, lets use it!
+test -L ${HOME}/.local.ps1 && source ${HOME}/.local.ps1

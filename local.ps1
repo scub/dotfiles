@@ -1,5 +1,14 @@
 #!/bin/bash
 
+
+####
+###
+## Quick behavior definitions
+###
+####
+AWS_IDENTITY_TIMEOUT=10s
+AWS_REMOVE_LOCKOUT=300
+
 ####
 ###
 ## Quick Color Definitions
@@ -18,7 +27,6 @@ export CLEAR="\033[0m"
 ## PS1 Preamble/Conclusion
 ###
 ####
-
 ps1_prefix() {
   OLDRETVAL=$?
   echo "$(ps1_get_host_identity) - $(ps1_get_python_venv)"
@@ -152,21 +160,45 @@ ps1_aws_identity() {
   #fi
 
   # Read from cache when available - needs to be invalidated
-  if [[ ! -e ${AWS_IDENTITY_CACHE} ]]; then
-    # Can only check if were online, naive verify (do we have any routes?)
-    if [[ $(ip r | wc -l) -gt 0 ]]; then
-      # Check if credentials are available
-      if [[ -e "${HOME}/.aws/credentials" ]]; then
-        echo $(aws sts get-caller-identity | jq -M '.Arn' | tr -d '"' | tr -d ' ') > ${AWS_IDENTITY_CACHE}
+  if [[ ! -e ${AWS_IDENTITY_LOCK} ]]; then
+    if [[ ! -e ${AWS_IDENTITY_CACHE} ]]; then
+      # Can only check if were online, naive verify (do we have any routes?)
+      if [[ $(ip r | wc -l) -gt 0 ]]; then
+        # Check if credentials are available
+        if [[ -e "${HOME}/.aws/config" ]]; then
+  
+          IDENTITY_BLOB=$( timeout ${AWS_IDENTITY_TIMEOUT} aws sts get-caller-identity 2>/dev/null || touch ${AWS_IDENTITY_LOCK} )
+          if [[ ! -z "${IDENTITY_BLOB}" ]]; then
+            # Pull what we need from the IDENTITY_BLOB
+            echo ${IDENTITY_BLOB} | jq -M '.Arn' | tr -d '"' | tr -d ' ' > ${AWS_IDENTITY_CACHE}
+          else
+            # Grab a timeout lock if we got a null result
+            touch ${AWS_IDENTITY_LOCK}
+          fi
+        fi
       fi
     fi
-  fi
-
-  IDENTITY=$((cat ${AWS_IDENTITY_CACHE} 2>/dev/null || echo "") | tr -d '\n')
-  if [[ -z "${IDENTITY}" ]]; then
-    rm -f ${AWS_IDENTITY_CACHE}
+  
+    IDENTITY=$((cat ${AWS_IDENTITY_CACHE} 2>/dev/null || echo "") | tr -d '\n')
+    if [[ -z "${IDENTITY}" ]]; then
+      rm -f ${AWS_IDENTITY_CACHE}
+    else
+      echo -en "\n   ${RED}|-- [ AWS User: ${DARK_YELLOW}${IDENTITY}${RED} ]"
+    fi
   else
-    echo -en "\n   ${RED}|-- [ AWS User: ${DARK_YELLOW}${IDENTITY}${RED} ]"
+    if [[ ! -e ${AWS_IDENTITY_LOCK} ]]; then
+      touch ${AWS_IDENTITY_LOCK}
+    else
+      # Check for stale lockout - defined as a global at the top of our script 
+      # remove after we consider it a long enough time to retry our identity checks.
+      LOCK_EPOCH=$(date +%s -r ${AWS_IDENTITY_LOCK})
+      LOCK_LIFESPAN=$((( $(date +%s) - ${LOCK_EPOCH} )))
+
+      echo "AWS: LOCK_EPOCH: ${LOCK_EPOCH} LOCK_LIFESPAN: ${LOCK_LIFESPAN}" >> /tmp/ps1-debug.log
+      [[ ${LOCK_LIFESPAN} -gt ${AWS_REMOVE_LOCKOUT} ]] && \
+        rm -f ${AWS_IDENTITY_LOCK}
+        echo "AWS Id lockout expired, rechecking" >> /tmp/ps1-debug.log
+    fi
   fi
 
   exit ${OLDRETVAL}

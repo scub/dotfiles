@@ -1,5 +1,55 @@
 #!/bin/bash
 
-ecrlogin() {
-  eval $(aws ecr get-login --no-include-email)
-}
+HELPERS="${HOME}/.bash.helpers"
+[[ -e "${HELPERS}" ]] && \
+  source ${HOME}/.bash.helpers
+
+# AWS Identity cache and corresponding timeout lock (PS1/local global)
+export AWS_IDENTITY_CACHE=$(mktemp)
+export AWS_IDENTITY_LOCK=${AWS_IDENTITY_CACHE}.lock
+# AWS Identity cache flush hit count (per-session)
+export CNT_FD=$(mktemp); echo 0 > ${CNT_FD}
+
+# AWS-CLI available check 
+AWS_CLI="$(which aws 2>/dev/null || eho '')"
+
+
+### AWS Shortcuts
+if [[ ! -z "${AWS_CLI}" ]]; then
+  alias a="${AWS_CLI}"
+  alias ap="${AWS_CLI} --profile playground"
+
+  alias apid="${AWS_CLI} --profile playground sts get-caller-identity"
+  alias ar53="${AWS_CLI} route53"
+  alias ards="${AWS_CLI} rds"
+  alias aces="${AWS_CLI} ecs"
+  alias aec2="${AWS_CLI} ec2"
+  alias aiam="${AWS_CLI} iam"
+
+  if [[ -e ${HOME}/.aws/config ]]; then
+
+    aid(){
+      # Flush our identity cache and any active locks
+      rm -f ${AWS_IDENTITY_CACHE} ${AWS_IDENTITY_LOCK}
+      # Directly request current profile definition
+      WHOAMIONAMAZON=$(${AWS_CLI} sts get-caller-identity 2>/dev/null)
+      # Rebuild our identity cache with our current information
+      echo ${WHOAMIONAMAZON} | jq -M '.Arn' | tr -d '"' | tr -d ' ' > ${AWS_IDENTITY_CACHE}
+      # Report our identity Definition in full (we have no usable post-processing)
+      echo -e "This is currently associated with the following AWS account:\n ${WHOAMIONAMAZON}"
+      ACCOUNT_ID=$(echo ${WHOAMIONAMAZON} | jq -M '.Arn' | cut -d':' -f5)
+      # Would be kewl to provide color coded associations (Account names, color per purpose, and
+      # overall indication of caution level to be applied within this context. Noting this below:
+      # TODO: ADD CONDITIONAL LOGIC FOR COLORED+NAMED ACCOUNT ARNs.
+    }
+
+    sap(){
+      # Swap AWS Profile
+      if [[ ${#} -gt 0 ]]; then
+        export AWS_PROFILE="${*}"
+        rm -f ${AWS_IDENTITY_CACHE}
+      fi
+    }
+  fi
+
+fi

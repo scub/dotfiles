@@ -1,0 +1,57 @@
+#
+# Zim default modules
+#
+
+zmodule environment
+zmodule input
+zmodule utility
+
+#
+# Terminal Theme
+#
+
+zmodule romkatv/powerlevel10k
+
+
+#
+# Completion
+#
+
+zmodule zsh-users/zsh-completions --fpath src
+zmodule zsh-users/zsh-history-substring-search
+
+# Enables and configures smart and extensive tab completion.
+# completion must be sourced after all modules that add completion definitions.
+zmodule completion
+zmodule grigorii-zander/zsh-npm-scripts-autocomplete
+
+
+#
+# ZSH plugin modules
+#
+
+zmodule ohmyzsh/ohmyzsh --root plugins/aws
+zmodule ohmyzsh/ohmyzsh --root plugins/brew
+zmodule ohmyzsh/ohmyzsh --root plugins/colored-man-pages
+zmodule ohmyzsh/ohmyzsh --root plugins/colorize
+zmodule ohmyzsh/ohmyzsh --root plugins/command-not-found
+zmodule ohmyzsh/ohmyzsh --root plugins/direnv
+zmodule ohmyzsh/ohmyzsh --root plugins/dotenv
+zmodule ohmyzsh/ohmyzsh --root plugins/git
+zmodule ohmyzsh/ohmyzsh --root plugins/github
+zmodule ohmyzsh/ohmyzsh --root plugins/jsontools
+zmodule ohmyzsh/ohmyzsh --root plugins/macos
+zmodule ohmyzsh/ohmyzsh --root plugins/node
+
+#
+# Additional 3rd party modules
+#
+
+zmodule jirutka/zsh-shift-select
+
+#
+# Modules that must be initialized last (after completion)
+#
+
+zmodule zsh-users/zsh-syntax-highlighting # Fish-like syntax highlighting for Zsh.
+zmodule zsh-users/zsh-autosuggestions     # Fish-like autosuggestions for Zsh.

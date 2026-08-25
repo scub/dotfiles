@@ -1,10 +1,16 @@
 #!/bin/bash
 
 DOTFILES=$HOME/.dotfiles
-OS_NAME=$(uname -s)
+OS_GENERIC=$(uname -s)
 ARCH=$(uname -m)
+DERIVED_SHELL=$(echo $(ps -o args= -p "$PPID" || ps -p "$PPID" -o comm=) | cut -d' ' -f1 | awk -F '/' '{ print $NF }')
 
 # Installer hooks
+pkg_install() {
+  test -f $DOTFILES/shims/$(uname -s).$(uname -m).sh \
+    && . $DOTFILES/shims/$(uname -s).$(uname -m).sh
+}
+
 xcode_install() {
   xcode-select -p 2>&1 >/dev/null && echo "[-] XCode installed, skipping" || {
       echo "[+] Installing xcode, this will take a while"
@@ -17,58 +23,103 @@ brew_install() {
     echo "[+] Installing homebrew"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   }
+
+  case $OS_GENERIC in
+    Darwin)
+      echo "no steps cataloged"
+      ;;
+    Linux)
+      which apt-get >/dev/null && 
+        sudo apt-get install -y build-essential
+
+      case $DERIVED_SHELL in
+        zsh)
+          echo >> $HOME/.zshrc
+          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"' >> $HOME/.bashrc
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
+          ;;
+        bash)
+          echo >> $HOME/.bashrc
+          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"' >> $HOME/.bashrc
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+          ;;
+        *)
+          echo "Unsupported shell; expecting zsh/bash: $DERIVED_SHELL"
+          ;;
+      esac
+      ;;
+    *)
+      echo "Unsupported OS, expecting Linux/Darwin: $OS_GENERIC"
+      ;;
+  esac
 }
 
 #
-# Clone and checkout DotFiles
+# Clone or pull latest DotFiles
 #
 if [ ! -d "$DOTFILES" ]; then
   echo -e "[+] Cloning DotFiles to $DOTFILES\n"
-  command git clone git@github.com:scub/dotenv-new $DOTFILES
+  command git clone git@github.com:scub/dotenv-new $DOTFILES 2>/dev/null
   command cd $DOTFILES
 else
   echo -e "[-] DotFiles repo exists at $DOTFILES, pulling latest"
-  command pushd $DOTFILES
-  command git pull origin HEAD
-  command popd
+  command pushd $DOTFILES >/dev/null 2>&1
+  command git pull origin HEAD >/dev/null 2>&1
+  command popd >/dev/null 2>&1
 fi
 
 #
 # Install any prereqs for configuration (os-dependent)
 #
-case $OS_NAME in
+case $OS_GENERIC in
   Darwin)
-    echo "Im on osx"
+    echo "[+] OSX instrumentation"
     xcode_install
     brew_install
+    asdf_add_plugins
+    BREWFILE="$DOTFILES/tools/Brewfile"
     ;;
   Linux)
-    echo "Im on linux"
+    echo "[+] Linux instrumentation"
+    pkg_install
     brew_install
+    BREWFILE="$DOTFILES/tools/Brewfile.$OS_GENERIC.$ARCH"
     ;;
   *)
-    echo "Im on an unsupported OS: $OS_NAME";;
+    echo "[!] Im on an unsupported OS: $OS_GENERIC"
+    exit 1
+    ;;
 esac
 
 #
 # Install Homebrew bundle
 #
 echo -e "\n[+] Installing Homebrew bundle"
-command brew bundle install --verbose --file=$DOTFILES/brewfile
+command brew bundle install --verbose --file=$BREWFILE
 
 #
-# Link user configs with Stow
+# Link configs with Stow
 #
 STOWS=$DOTFILES/config
 echo -e "\n[+] Linking Stow packages"
 command stow -v -t $HOME -d $STOWS -S stow # link stow config before creating other links
 command stow -v -t $HOME -d $STOWS -S asdf git npm tmux vim p10k zim zsh
 
+# Install asdf plugins
+asdf_add_plugins
+
 #
-# OSX: Verify secrets populated
+# Verify secrets are populated
 #
-test $OS_NAME = "Darwin"        \
-  && for SEC_NAME in GIT_NAME   \
+test -f $DOTFILES/environment/secret.sh                     \
+  || echo "Unable to find $DOTFILES/environment/secret.sh"  \
+  && {
+    echo "sourcing $DOTFILES/environment/secret.sh" \
+      && source $DOTFILES/environment/secret.sh
+  }
+
+
+for SEC_NAME in GIT_NAME        \
                   GIT_EMAIL     \
                   GIT_USERNAME  \
                   HOMETOWN      \
@@ -83,7 +134,7 @@ test $OS_NAME = "Darwin"        \
         read -rs -p "[+] Secret $SEC_NAME not found, enter it: " SEC_VAL; echo
         secret set $SEC_NAME $SEC_VAL
       }
-  done
+done
 
 # Done
 echo -e "\n[!] DotFiles installed, restart shell for changes to take effect"

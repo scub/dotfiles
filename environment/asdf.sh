@@ -1,9 +1,18 @@
 # ASDF
 # http://asdf-vm.com/
-# source $(brew --prefix asdf)/libexec/asdf.sh
 
-asdf_plugins_add() {
+asdf_add_plugins() {
   INSTALLED_PLUGIN_LIST=$(asdf plugin list 2>/dev/null)
+
+  ASDF_PLUGIN_LIST="""
+  direnv
+  helm
+  kubectl
+  kubectx
+  opentofu
+  terraform
+  terraform-docs
+
   for ASDF_PLUGIN in awscli           \
                       golang          \
                       helm-diff       \
@@ -34,6 +43,3 @@ asdf_plugins_add() {
     echo $ASDF_PLUGIN
   done
 }
-
-# autoload -Uz compinit
-# compinit

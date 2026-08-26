@@ -1,7 +1,7 @@
 # 1Password to environment exporter
 hydrate() {
-  ITEM=$(secret get 1P_ENV_ITEM)
-  VAULT_NAME=$(secret get 1P_VAULT)
+  ITEM=$(secret get ONEP_ENV_ITEM)
+  VAULT_NAME=$(secret get ONEP_VAULT)
 
 	usage="USAGE: $(basename "$0") [-v|--vault] <vault> [-i|--item] <item> <section>
 

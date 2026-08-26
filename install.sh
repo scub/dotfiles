@@ -64,8 +64,6 @@ echo -e "\n[+] Linking Stow packages"
 command stow -v -t $HOME -d $STOWS -S stow # link stow config before creating other links
 command stow -v -t $HOME -d $STOWS -S asdf git npm tmux vim p10k zim zsh
 
-#  npm zim zsh
-
 #
 # OSX: Verify secrets populated
 #

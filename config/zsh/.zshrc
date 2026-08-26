@@ -36,6 +36,8 @@ uname -s | grep -c "Darwin" >/dev/null && {
   secret export HOME_TOWN --silent
   secret export INTERNAL_REG --silent
   secret export NPM_TOKEN --silent
+  secret export ONEP_ENV_ITEM --silent
+  secret export ONEP_VAULT --silent
 }
 
 # Source environment extensions

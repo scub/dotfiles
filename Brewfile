@@ -1,11 +1,11 @@
 # Primary Brewfile for tooling
-tap "common-fate/granted", trusted: { formula: "granted" } 
+tap "common-fate/granted", trusted: { formula: "granted" }
 tap "derailed/k9s", trusted: { formula: "k9s" }
 tap "grafana/grafana", trusted: { formula: "gcx" }
 tap "hashicorp/tap", trusted: { formula: "vagrat" }
 tap "int128/kubelogin", trusted: { formula: "kubelogin" }
 brew "argocd"
-brew "asdf"
+#brew "asdf"
 brew "autoconf"
 brew "bat"
 brew "chart-testing"
@@ -40,6 +40,7 @@ brew "nmap"
 brew "nvim"
 brew "ripgrep"
 brew "speedtest-cli"
+brew "rectangle"
 brew "sqlite"
 brew "stow"
 brew "tmux"

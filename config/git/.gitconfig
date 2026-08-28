@@ -7,7 +7,7 @@
 [core]
   excludesfile = ~/.gitignore
 [gpg]
-  program = /usr/local/bin/gpg
+  program = /opt/homebrew/bin/gpg
   format = ssh
 [pager]
   branch = false

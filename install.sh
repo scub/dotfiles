@@ -108,7 +108,7 @@ command stow -v -t $HOME -d $STOWS -S stow # link stow config before creating ot
 command stow -v -t $HOME -d $STOWS -S asdf tmux vim p10k zim zsh bash
 
 test "$DARWIN" == "1"                                             \
-  && command stow -v -t $HOME -d $STOWS -S work-git work-npm  \
+  && command stow -v -t $HOME -d $STOWS -S work-git work-npm      \
   || command stow -v -t $HOME -d $STOWS -S git npm
 
 # Install asdf and plugins

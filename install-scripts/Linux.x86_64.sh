@@ -6,22 +6,22 @@ install_ubuntu() {
             ansible                 \
             ansible-core            \
             ansible-lint            \
-            python3-ansible-compat  \
             build-essential         \
             curl                    \
             dirmngr                 \
             gnome-keyring           \
+            golang                  \
             gpg                     \
             htop                    \
             i3                      \
             jq                      \
-            libssl-dev              \
             libbz2-dev              \
             libffi-dev              \
             liblzma-dev             \
             libncursesw5-dev        \
             libreadline-dev         \
             libsqlite3-dev          \
+            libssl-dev              \
             libxml2-dev             \
             libxmlsec1-dev          \
             libyaml-dev             \
@@ -30,6 +30,7 @@ install_ubuntu() {
             masscan                 \
             mtr                     \
             nmap                    \
+            python3-ansible-compat  \
             sqlite3                 \
             tk-dev                  \
             wget                    \
@@ -37,10 +38,17 @@ install_ubuntu() {
             yamllint                \
             yq                      \
             yubikey-manager         \
-            zlib1g-dev
+            zlib1g-dev              \
+            zsh                     \
+            zsh-common              \
+            zsh-dev                 \
+            zsh-doc                 \
+            zsh-syntax-highlighting \
+            zsh-theme-powerlevel9k
 }
 
-OS_RESOLVED=$(egrep '^NAME=' /etc/os-release | cut -d'=' -f2 | tr -d '"')
+OS_RESOLVED=$(egrep '^NAME=' /etc/os-release-stuff 2>/dev/null | cut -d'=' -f2 | tr -d '"')
+
 
 case $OS_RESOLVED in
     Ubuntu)
@@ -48,10 +56,10 @@ case $OS_RESOLVED in
         install_ubuntu
         ;;
     "Fedora Linux")
-        echo "Detected Fedora"
+        echo "Detected Fedora: $OS_RESOLVED"
         ;;
     "Arch Linux")
-        echo "Detected Arch"
+        echo "Detected Arch: $OS_RESOLVED"
         ;;
     *)
         echo "Unsupported OS: $OS_RESOLVED"

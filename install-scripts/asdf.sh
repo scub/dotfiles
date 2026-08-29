@@ -21,10 +21,9 @@ python
 ruby
 terraform
 terraform-docs
+uv
 yarn
 """
-
-for i in $ASDF_PLUGIN_LIST; do echo $i; done
 
 asdf_add_plugins() {
   INSTALLED_PLUGIN_LIST=$(asdf plugin list 2>/dev/null)

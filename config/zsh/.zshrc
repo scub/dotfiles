@@ -1,4 +1,9 @@
-OS_NAME=$(uname -m)
+export OS_NAME=$(uname -m)
+
+# Daily history, never deleted
+typeset -g HISTFILE="${ZDOTDIR:-$HOME}/.zsh_history_$(date +'%Y-%m-%d')"
+HISTSIZE=
+SAVEHIST=
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -57,9 +62,11 @@ uname -s | grep -c "Darwin" >/dev/null && {
   secret export TELEPORT_ENTRY --internal
 }
 
+# Source shell config
+source $DOTFILES/environment/bash.sh
+
 # Source environment extensions
 source $DOTFILES/environment/1pass.sh
-# source $DOTFILES/environment/asdf.sh # install helpers
 source $DOTFILES/environment/aws-helpers.sh
 source $DOTFILES/environment/certs.sh
 source $DOTFILES/environment/docker.sh

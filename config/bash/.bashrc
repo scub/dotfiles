@@ -1,12 +1,5 @@
 OS_NAME=$(uname -m)
 
-# New history per day, never delete
-export HISTFILE="$HOME/.bash_history_$(date +'%Y-%m-%d')"
-export HISTSIZE=-1
-export HISTFILESIZE=-1
-shopt -s histappend
-PROMPT_COMMAND="history -a; ${PROMPT_COMMAND:-}"
-
 export DOTFILES=$HOME/.dotfiles
 alias dotfiles='cd $DOTFILES'
 alias dotfiles-install='. $DOTFILES/install.sh'
@@ -60,9 +53,11 @@ uname -s | grep -c "Darwin" >/dev/null && {
 # Source environment extensions
 source $DOTFILES/environment/1pass.sh
 source $DOTFILES/environment/aws-helpers.sh
+source $DOTFILES/environment/bash.sh
 source $DOTFILES/environment/certs.sh
 source $DOTFILES/environment/docker.sh
 source $DOTFILES/environment/git.sh
+source $DOTFILES/environment/github.sh
 source $DOTFILES/environment/granted.sh
 source $DOTFILES/environment/k8s.sh
 source $DOTFILES/environment/pnpm.sh
@@ -77,4 +72,3 @@ source $DOTFILES/environment/virtualbox.sh
 source $DOTFILES/environment/weather.sh
 source $DOTFILES/environment/work.sh
 source $DOTFILES/environment/zim.sh
-source $DOTFILES/environment/zsh.sh

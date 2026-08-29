@@ -1,18 +1,17 @@
 #!/bin/bash
 
 DOTFILES=$HOME/.dotfiles
-
 . $DOTFILES/install-scripts/asdf.sh
 . $DOTFILES/environment/utils.sh
 
-OS_GENERIC=$(uname -s)
 ARCH=$(uname -m)
+OS_GENERIC=$(uname -s)
 DERIVED_SHELL=$(derive_shell)
 
 # Installer hooks
 pkg_install() {
-  test -f $DOTFILES/shims/$(uname -s).$(uname -m).sh \
-    && . $DOTFILES/shims/$(uname -s).$(uname -m).sh
+  test -f $DOTFILES/install-scripts/$(uname -s).$(uname -m).sh \
+    && . $DOTFILES/install-scripts/$(uname -s).$(uname -m).sh
 }
 
 xcode_install() {
@@ -114,12 +113,12 @@ test $DARWIN == 1                                             \
   && command stow -v -t $HOME -d $STOWS -S work-git work-npm  \
   || command stow -v -t $HOME -d $STOWS -S git npm
 
-<<<<<<< HEAD
-=======
 # Install asdf and plugins
 asdf_update_or_install
 
->>>>>>> 65b3e13 (chore: improve linux support)
+# Install plugin extensions / tools
+. $DOTFILES/installer-scripts/enable_extensions.sh
+
 #
 # Verify secrets are populated
 #

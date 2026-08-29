@@ -24,8 +24,8 @@ Set **all below** that apply, e.g. `secret set NPM_TOKEN "<YOUR_TOKEN>"`
 
 | Variable             | Description                                             | Example                         |
 | -------------------- | ------------------------------------------------------- | ------------------------------- |
-| `1P_VAULT`           | Set personal 1password vault name                       | `personal`                      |
-| `1P_ENV_ITEM`        | Set 1password item name holding environment config      | `myenv`                         |
+| `ONEP_VAULT`           | Set personal 1password vault name                       | `personal`                      |
+| `ONEP_ENV_ITEM`        | Set 1password item name holding environment config      | `myenv`                         |
 | `INTERNAL_REG`       | Set URL for internal registry (npm/yarn)                | `myregurl.com`                  |
 | `QMAN_URL`           | Set the QMAN Url for surfacing queue info               | `qman.fu`                       |
 | `TELEPORT_ENTRY`     | Set the teleport instance for use by helpers            | `teleport.sh`                   |

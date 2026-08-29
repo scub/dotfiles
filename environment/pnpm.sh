@@ -16,5 +16,7 @@ alias pi="pnpm install --loglevel=error"
 alias pw="pnpm install --workspace-root"
 alias pui="pnpm upgrade --interactive --latest"
 
-secret >/dev/null || source environment/secret.sh && : "${INTERNAL_REG:=$(secret get INTERNAL_REG)}"
-alias npm-auth="npm login --registry=https://${INTERNAL_REG}/api/npm/npm/ --auth-type=web"
+test $(uname -s) == Darwin && {
+  secret >/dev/null || source environment/secret.sh && : "${INTERNAL_REG:=$(secret get INTERNAL_REG)}"
+  alias npm-auth="npm login --registry=https://${INTERNAL_REG}/api/npm/npm/ --auth-type=web"
+}

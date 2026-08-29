@@ -27,24 +27,22 @@ brew_install() {
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   }
 
+  BREW_PREFIX=$(brew --prefix)
   case $OS_GENERIC in
     Darwin)
       echo "no steps cataloged"
       ;;
     Linux)
-      which apt-get >/dev/null && 
-        sudo apt-get install -y build-essential
-
       case $DERIVED_SHELL in
         zsh)
-          echo >> $HOME/.zshrc
-          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"' >> $HOME/.bashrc
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
+          # echo >> $HOME/.zshrc
+          # echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"' >> $HOME/.zshrc
+          eval "$($BREW_PREFIX/bin/brew shellenv zsh)"
           ;;
         bash)
-          echo >> $HOME/.bashrc
-          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"' >> $HOME/.bashrc
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+          # echo >> $HOME/.bashrc
+          # echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"' >> $HOME/.bashrc
+          eval "$($BREW_PREFIX/bin/brew shellenv bash)"
           ;;
         *)
           echo "Unsupported shell; expecting zsh/bash: $DERIVED_SHELL"

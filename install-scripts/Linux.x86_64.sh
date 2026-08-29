@@ -48,7 +48,7 @@ install_ubuntu() {
             zsh-theme-powerlevel9k
 }
 
-OS_RESOLVED=$(egrep '^NAME=' /etc/os-release 2>/dev/null | cut -d'=' -f2 | tr -d '"')
+OS_RESOLVED=$(egrep '^NAME=' /etc/os-release | cut -d'=' -f2 | tr -d '"')
 
 
 case $OS_RESOLVED in

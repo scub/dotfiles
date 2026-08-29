@@ -28,18 +28,18 @@ yarn
 asdf_add_plugins() {
   INSTALLED_PLUGIN_LIST=$(asdf plugin list 2>/dev/null)
 
-  echo "[+] Installing missing asdf plugins"
+  echo "[+] Installing asdf plugins"
   for ASDF_PLUGIN in $ASDF_PLUGIN_LIST; do
     echo $INSTALLED_PLUGIN_LIST | grep -c $ASDF_PLUGIN >/dev/null   \
-      && echo "[-] $ASDF_PLUGIN already installed, skipping"        \
+      && echo "\t[-] $ASDF_PLUGIN already installed, skipping"        \
       || {
-        echo "[+] Installing latest version of $ASDF_PLUGIN"
+        echo "\t[+] Installing latest version of $ASDF_PLUGIN"
         asdf plugin add $ASDF_PLUGIN
         asdf install $ASDF_PLUGIN latest
       }
   done
 
-  echo "[+] Installing defaults from .tool-versions"
+  echo "\t[+] Installing defaults from .tool-versions"
   asdf install
 }
 
@@ -76,7 +76,7 @@ asdf_update_or_install() {
     }
 
   ADD_ASDF_SHIM_TO_PATH='export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"'
-  echo "[+] Checking shell for path/completion"
+  echo "\t[+] Checking shell for path/completion"
   case $DERIVED_SHELL in
     bash)
       ADD_ASDF_COMPLETION='. <(asdf completion bash)'

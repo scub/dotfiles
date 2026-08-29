@@ -1,9 +1,13 @@
 #!/bin/bash
 
 DOTFILES=$HOME/.dotfiles
+
+. $DOTFILES/install-scripts/asdf.sh
+. $DOTFILES/environment/utils.sh
+
 OS_GENERIC=$(uname -s)
 ARCH=$(uname -m)
-DERIVED_SHELL=$(echo $(ps -o args= -p "$PPID" || ps -p "$PPID" -o comm=) | cut -d' ' -f1 | awk -F '/' '{ print $NF }')
+DERIVED_SHELL=$(derive_shell)
 
 # Installer hooks
 pkg_install() {
@@ -76,14 +80,15 @@ case $OS_GENERIC in
     echo "[+] OSX instrumentation"
     xcode_install
     brew_install
-    asdf_add_plugins
     BREWFILE="$DOTFILES/tools/Brewfile"
+    DARWIN=1
     ;;
   Linux)
     echo "[+] Linux instrumentation"
     pkg_install
     brew_install
     BREWFILE="$DOTFILES/tools/Brewfile.$OS_GENERIC.$ARCH"
+    LINUX=1
     ;;
   *)
     echo "[!] Im on an unsupported OS: $OS_GENERIC"
@@ -103,33 +108,39 @@ command brew bundle install --verbose --file=$BREWFILE
 STOWS=$DOTFILES/config
 echo -e "\n[+] Linking Stow packages"
 command stow -v -t $HOME -d $STOWS -S stow # link stow config before creating other links
-command stow -v -t $HOME -d $STOWS -S asdf git npm tmux vim p10k zim zsh
+command stow -v -t $HOME -d $STOWS -S asdf tmux vim p10k zim zsh bash
 
-# Install asdf plugins
-asdf_add_plugins
+test $DARWIN == 1                                             \
+  && command stow -v -t $HOME -d $STOWS -S work-git work-npm  \
+  || command stow -v -t $HOME -d $STOWS -S git npm
 
+<<<<<<< HEAD
+=======
+# Install asdf and plugins
+asdf_update_or_install
+
+>>>>>>> 65b3e13 (chore: improve linux support)
 #
 # Verify secrets are populated
 #
 test -f $DOTFILES/environment/secret.sh                     \
   || echo "Unable to find $DOTFILES/environment/secret.sh"  \
   && {
-    echo "sourcing $DOTFILES/environment/secret.sh" \
+    echo "sourcing $DOTFILES/environment/secret.sh"         \
       && source $DOTFILES/environment/secret.sh
   }
 
-
-for SEC_NAME in GIT_NAME        \
-                  GIT_EMAIL     \
-                  GIT_USERNAME  \
-                  HOMETOWN      \
-                  NPM_TOKEN     \
-                  1P_VAULT      \
-                  1P_ENV_ITEM   \
-                  INTERNAL_REG  \
-                  QMAN_URL      \
+for SEC_NAME in GIT_NAME                  \
+                  GIT_EMAIL               \
+                  GIT_USERNAME            \
+                  HOMETOWN                \
+                  NPM_TOKEN               \
+                  ONEP_VAULT              \
+                  ONEP_ENV_ITEM           \
+                  INTERNAL_REG            \
+                  QMAN_URL                \
                   TELEPORT_ENTRY; do
-    secret get $SEC_NAME >/dev/null 2>&1 \
+    secret get $SEC_NAME >/dev/null 2>&1  \
       || {
         read -rs -p "[+] Secret $SEC_NAME not found, enter it: " SEC_VAL; echo
         secret set $SEC_NAME $SEC_VAL

@@ -59,6 +59,11 @@ unboondle() {
   }
 }
 
+# Derive calling shell from inside a script 
+derive_shell() {
+  echo $(ps -o args= -p "$PPID" || ps -p "$PPID" -o comm=) | cut -d' ' -f1 | awk -F '/' '{ print $NF }'
+} 
+
 alias scripts="cat package.json | jq '.scripts'"
 alias readme="cat README.md | glow"
 alias code="open -a 'Visual Studio Code'"

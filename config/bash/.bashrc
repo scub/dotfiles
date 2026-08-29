@@ -1,11 +1,11 @@
 OS_NAME=$(uname -m)
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# New history per day, never delete
+export HISTFILE="$HOME/.bash_history_$(date +'%Y-%m-%d')"
+export HISTSIZE=-1
+export HISTFILESIZE=-1
+shopt -s histappend
+PROMPT_COMMAND="history -a; ${PROMPT_COMMAND:-}"
 
 export DOTFILES=$HOME/.dotfiles
 alias dotfiles='cd $DOTFILES'
@@ -23,6 +23,7 @@ export PATH=/usr/local/bin:$PATH
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 
+# Homebrew paths
 case $OS_NAME in
     Darwin)
         export PATH=/opt/homebrew/bin:$PATH
@@ -38,7 +39,6 @@ esac
 # ASDF at the top of the path stack
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 export MANPATH=/usr/local/man:$MANPATH
-export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 # Source secrets lib first
 source $DOTFILES/environment/secret.sh
@@ -49,17 +49,16 @@ secret export GIT_EMAIL --silent
 secret export GIT_USERNAME --silent
 secret export HOME_TOWN --silent
 secret export NPM_TOKEN --silent
+secret export ONEP_VAULT --silent
+secret export ONEP_ENV_ITEM --silent
 uname -s | grep -c "Darwin" >/dev/null && {
-  secret export INTERNAL_REG --silent
-  secret export ONEP_ENV_ITEM --silent
-  secret export ONEP_VAULT --silent
+  secret export INTERNAL_REG --internal
   secret export QMAN_URL --internal
   secret export TELEPORT_ENTRY --internal
 }
 
 # Source environment extensions
 source $DOTFILES/environment/1pass.sh
-# source $DOTFILES/environment/asdf.sh # install helpers
 source $DOTFILES/environment/aws-helpers.sh
 source $DOTFILES/environment/certs.sh
 source $DOTFILES/environment/docker.sh
@@ -79,8 +78,3 @@ source $DOTFILES/environment/weather.sh
 source $DOTFILES/environment/work.sh
 source $DOTFILES/environment/zim.sh
 source $DOTFILES/environment/zsh.sh
-source $DOTFILES/environment/yarn.sh
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-plugins=(asdf)

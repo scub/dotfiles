@@ -1,63 +1,69 @@
-# Primary Brewfile for tooling on Linux
+# Primary Brewfile for tooling on OSX
 tap "common-fate/granted", trusted: { formula: "granted" } 
 tap "derailed/k9s", trusted: { formula: "k9s" }
 tap "grafana/grafana", trusted: { formula: "gcx" }
+tap "hashicorp/tap", trusted: { formula: "vagrat" }
 tap "int128/kubelogin", trusted: { formula: "kubelogin" }
-
-# Unsupported taps/casks
-#tap "hashicorp/tap", trusted: { formula: "vagrat" } # unsupported
-#cask "hashicorp/tap/hashicorp-vagrant", trusted: true # unsupported
-
-# Installed as packages 
-#cask "gpg-suite"
-
-#brew "asdf"
-#brew "cmake"
-#brew "curl"
-#brew "direnv"
-#brew "git"
-#brew "gnupg"
-#brew "htop"
-#brew "jq"
-#brew "mtr"
-#brew "sqlite"
-#brew "watch"
-#brew "wget"
-#brew "xz"
-#brew "ykman"
-#brew "yq"
+brew "act" # local github actions harness
 brew "argocd"
+# Support from brew install is shite
+# brew "asdf"
 brew "autoconf"
 brew "bat"
 brew "chart-testing"
+brew "cirruslabs/cli/tart" # virtualization run MacOSX/Linux VMs on Apple Silicon (local-ci req)
 brew "cloudflared"
+brew "cmake"
+brew "coreutils"
+brew "curl"
 brew "difftastic"
+brew "direnv"
+brew "eza"
+brew "floci-io/floci/floci" # aws emulation
 brew "fzf"
 brew "gawk"
 brew "gcx"
 brew "gh"
-brew "gitlab-ci-local"
+brew "git"
+brew "gitlab-ci-local" # local gitlab ci harness
 brew "glab"
 brew "glow"
+brew "gnupg"
 brew "granted"
 brew "graphviz"
+brew "htop"
 brew "jfrog-cli"
+brew "jq"
 brew "k6"
 brew "k9s"
 brew "kcat"
 brew "kubectx"
 brew "kubelogin"
 brew "mkcert"
+brew "mtr"
+brew "mysql-client"
 brew "ncurses"
 brew "nmap"
 brew "nvim"
+brew "postgresql@18"
+brew "pyenv"
 brew "ripgrep"
-brew "speedtest-cli"
+brew "rectangle"
+brew "sqlite"
+brew "hudochenkov/sshpass/sshpass" # non-interactive password auth over ssh (local-ci req)
 brew "stow"
 brew "tmux"
+brew "watch"
+brew "wget"
+brew "xz"
+brew "ykman"
+brew "yq"
+brew "zlib"
 brew "zstd"
 cask "1password-cli"
 cask "bruno"
+cask "gpg-suite"
+cask "hashicorp/tap/hashicorp-vagrant", trusted: true
 cask "qlmarkdown"
 cask "wizcli"
 # Global NPM tooling

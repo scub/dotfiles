@@ -37,10 +37,10 @@ asdf_add_plugins() {
         asdf plugin add $ASDF_PLUGIN
         asdf install $ASDF_PLUGIN latest
       }
-
-    echo "[+] Installing defaults from .tool-verions"
-    asdf install
   done
+
+  echo "[+] Installing defaults from .tool-versions"
+  asdf install
 }
 
 asdf_update_or_install() {
@@ -80,8 +80,8 @@ asdf_update_or_install() {
   case $DERIVED_SHELL in
     bash)
       ADD_ASDF_COMPLETION='. <(asdf completion bash)'
-      grep -c $ADD_ASDF_SHIM_TO_PATH $HOME/.bashrc >/dev/null || echo "\n$ADD_ASDF_SHIM_TO_PATH" >> $HOME/.bashrc
-      grep -c $ADD_ASDF_COMPLETION $HOME/.bashrc >/dev/null || echo "\n$ADD_ASDF_COMPLETION" >> $HOME/.bashrc
+      grep -c "$ADD_ASDF_SHIM_TO_PATH" $HOME/.bashrc >/dev/null || echo "\n$ADD_ASDF_SHIM_TO_PATH" >> $HOME/.bashrc
+      grep -c "$ADD_ASDF_COMPLETION" $HOME/.bashrc >/dev/null || echo "\n$ADD_ASDF_COMPLETION" >> $HOME/.bashrc
       ;;
     zsh)
       ASDF_FPATH_SETTINGS='fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)'
@@ -89,8 +89,8 @@ asdf_update_or_install() {
       test -d ${ASDF_DATA_DIR:-$HOME/.asdf}/completions/_asdf \
         || asdf completion zsh > ${ASDF_DATA_DIR:-$HOME/.asdf}/completions/_asdf
       
-      grep -c $FPATH_SETTINGS $HOME/.zshrc >/dev/null || echo "\n$FPATH_SETTINGS" >> $HOME/.zshrc
-      grep -c $ASDF_AUTOLOAD $HOME/.zshrc >/dev/null || echo "\n$ASDF_AUTOLOAD" >> $HOME/.zshrc
+      grep -c "$FPATH_SETTINGS" $HOME/.zshrc >/dev/null || echo "\n$FPATH_SETTINGS" >> $HOME/.zshrc
+      grep -c "$ASDF_AUTOLOAD" $HOME/.zshrc >/dev/null || echo "\n$ASDF_AUTOLOAD" >> $HOME/.zshrc
       ;;
     *) 
       echo "[!] $SHELL is not supported; options zsh/bash"

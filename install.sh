@@ -79,15 +79,15 @@ case $OS_GENERIC in
     echo "[+] OSX instrumentation"
     xcode_install
     brew_install
-    BREWFILE="$DOTFILES/tools/Brewfile"
-    DARWIN=1
+    export BREWFILE="$DOTFILES/Brewfile"
+    export DARWIN=1
     ;;
   Linux)
     echo "[+] Linux instrumentation"
-    pkg_install
+    # pkg_install
     brew_install
-    BREWFILE="$DOTFILES/tools/Brewfile.$OS_GENERIC.$ARCH"
-    LINUX=1
+    export BREWFILE="$DOTFILES/Brewfile.$OS_GENERIC.$ARCH"
+    export LINUX=1
     ;;
   *)
     echo "[!] Im on an unsupported OS: $OS_GENERIC"
@@ -109,7 +109,7 @@ echo -e "\n[+] Linking Stow packages"
 command stow -v -t $HOME -d $STOWS -S stow # link stow config before creating other links
 command stow -v -t $HOME -d $STOWS -S asdf tmux vim p10k zim zsh bash
 
-test $DARWIN == 1                                             \
+test "$DARWIN" == "1"                                             \
   && command stow -v -t $HOME -d $STOWS -S work-git work-npm  \
   || command stow -v -t $HOME -d $STOWS -S git npm
 
@@ -117,7 +117,7 @@ test $DARWIN == 1                                             \
 asdf_update_or_install
 
 # Install plugin extensions / tools
-. $DOTFILES/installer-scripts/enable_extensions.sh
+. $DOTFILES/install-scripts/enable_extensions.sh
 
 #
 # Verify secrets are populated

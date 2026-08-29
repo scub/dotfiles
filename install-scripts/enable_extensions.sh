@@ -1,16 +1,17 @@
 
-. $HOME/.dotfiles/installer-scripts/bitwarden.sh
-. $HOME/.dotfiles/installer-scripts/ansible.sh
-. $HOME/.dotfiles/installer-scripts/rubygems.sh
-. $HOME/.dotfiles/installer-scripts/pypackages.sh
+. $HOME/.dotfiles/install-scripts/bitwarden.sh
+. $HOME/.dotfiles/install-scripts/ansible.sh
+. $HOME/.dotfiles/install-scripts/rubygems.sh
+# . $HOME/.dotfiles/install-scripts/pypackages.sh
 
-OS_RESOLVED=$(egrep '^NAME=' /etc/os-release | cut -d'=' -f2 | tr -d '"' || uname -s)
+OS_RESOLVED=$(egrep '^NAME=' /etc/os-release || echo "NAME=$(uname -s)" | cut -d'=' -f2 | tr -d '"' || uname -s)
 
 case $OS_RESOLVED in
     Darwin)
         echo "OSX: $OS_RESOLVED"
         install_bitwarden_direnv_ext
         install_rubygem_tools
+        ;;
     Ubuntu)
         echo "Ubuntu: $OS_RESOLVED"
         install_ansible_collections

@@ -50,10 +50,12 @@ uname -s | grep -c "Darwin" >/dev/null && {
   secret export TELEPORT_ENTRY --internal
 }
 
+# Source shell config
+source $DOTFILES/environment/bash.sh
+
 # Source environment extensions
 source $DOTFILES/environment/1pass.sh
 source $DOTFILES/environment/aws-helpers.sh
-source $DOTFILES/environment/bash.sh
 source $DOTFILES/environment/certs.sh
 source $DOTFILES/environment/docker.sh
 source $DOTFILES/environment/git.sh

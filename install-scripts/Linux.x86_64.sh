@@ -20,6 +20,7 @@ install_ubuntu() {
             liblzma-dev             \
             libncursesw5-dev        \
             libreadline-dev         \
+            libsecret-tools         \
             libsqlite3-dev          \
             libssl-dev              \
             libxml2-dev             \
@@ -47,12 +48,12 @@ install_ubuntu() {
             zsh-theme-powerlevel9k
 }
 
-OS_RESOLVED=$(egrep '^NAME=' /etc/os-release-stuff 2>/dev/null | cut -d'=' -f2 | tr -d '"')
+OS_RESOLVED=$(egrep '^NAME=' /etc/os-release 2>/dev/null | cut -d'=' -f2 | tr -d '"')
 
 
 case $OS_RESOLVED in
     Ubuntu)
-        echo "Ubuntu: $OS_RESOLVED"
+        echo "[+] Ubuntu identified, running pkg install"
         install_ubuntu
         ;;
     "Fedora Linux")

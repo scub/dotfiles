@@ -33,7 +33,7 @@ secret () {
   if [ "$MODE" = "set" ] && [ $ARG_LENGTH -eq "3" ]; then
     export VALUE="$3"
 
-    if $(echo $ADD_SECRET | envsubst);
+    if $(echo "echo $ADD_SECRET" | envsubst);
     then echo "$KEY saved to keychain.";
     fi
 

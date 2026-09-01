@@ -5,7 +5,6 @@ tap "grafana/grafana", trusted: { formula: "gcx" }
 tap "hashicorp/tap", trusted: { formula: "vagrat" }
 tap "int128/kubelogin", trusted: { formula: "kubelogin" }
 brew "argocd"
-#brew "asdf"
 brew "autoconf"
 brew "bat"
 brew "chart-testing"

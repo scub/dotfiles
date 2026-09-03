@@ -58,6 +58,34 @@ kgsi() {
     | jq --arg path "$SEARCH_PATH" 'select(.path == $path)'
 }
 
+# List all ingress' for a namespace
+kglin() {
+  test $# -eq 0 && {
+    echo "ERROR: A namespace is required"
+    echo "Usage: kglin <namespace>"
+    return 1
+  }
+
+  NAMESPACE="${1}"
+  kubectl get ingress -n $NAMESPACE -o json \
+    | jq '
+        .items[]
+        | .metadata.namespace as $ns
+        | .metadata.name as $svc
+        | .spec.rules[] as $r
+        | .spec.ingressClassName as $icn
+        | $r.http.paths[]
+        | {
+            namespace: $ns,
+            service: $svc,
+            ingress: $icn,
+            host: $r.host,
+            path: .path,
+            full_uri: ($r.host + .path),
+            logql: "{namespace=\"\($ns)\", job=\"\($ns)/\($svc)\"}"
+          }'
+}
+
 # Kube aliases
 alias kg='kubectl get'
 alias kgp='kubectl get pod'

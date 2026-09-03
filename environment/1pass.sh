@@ -39,7 +39,7 @@ hydrate() {
 
   if [ ${#CREDS[@]} -gt 0 ]; then
     for item in ${CREDS[@]}; do
-      export item
+      export "$item"
     done
   fi
 }

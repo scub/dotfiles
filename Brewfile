@@ -4,6 +4,7 @@ tap "derailed/k9s", trusted: { formula: "k9s" }
 tap "grafana/grafana", trusted: { formula: "gcx" }
 tap "hashicorp/tap", trusted: { formula: "vagrat" }
 tap "int128/kubelogin", trusted: { formula: "kubelogin" }
+brew "act" # local github actions harness
 brew "argocd"
 brew "autoconf"
 brew "bat"
@@ -15,13 +16,13 @@ brew "curl"
 brew "difftastic"
 brew "direnv"
 brew "eza"
-brew "floci-io/floci/floci"
+brew "floci-io/floci/floci" # aws emulation
 brew "fzf"
 brew "gawk"
 brew "gcx"
 brew "gh"
 brew "git"
-brew "gitlab-ci-local"
+brew "gitlab-ci-local" # local gitlab ci harness
 brew "glab"
 brew "glow"
 brew "gnupg"

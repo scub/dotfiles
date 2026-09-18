@@ -9,6 +9,7 @@ helm
 helm-diff
 helm-docs
 helmfile
+hugo
 just
 kops
 kubectl

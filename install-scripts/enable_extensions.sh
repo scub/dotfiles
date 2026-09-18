@@ -14,7 +14,6 @@ OS_RESOLVED=$(resolve_os)
 
 echo "[!] Installing extensions for OS: $OS_RESOLVED"
 
-
 case $OS_RESOLVED in
     Darwin)
         install_bitwarden_direnv_ext

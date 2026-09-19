@@ -105,7 +105,7 @@ command brew bundle install --verbose --file=$BREWFILE
 STOWS=$DOTFILES/config
 echo -e "\n[+] Linking Stow packages"
 command stow -v -t $HOME -d $STOWS -S stow # link stow config before creating other links
-command stow -v -t $HOME -d $STOWS -S asdf tmux vim p10k zim zsh bash
+command stow -v -t $HOME -d $STOWS -S asdf tmux vim p10k zim gpg zsh bash
 
 test "$DARWIN" == "1"                                             \
   && command stow -v -t $HOME -d $STOWS -S work-git work-npm      \

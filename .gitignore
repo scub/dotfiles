@@ -1,2 +1,4 @@
 localrc
 .*.swp
+scratch/*
+.zshrc

@@ -1,0 +1,17 @@
+[user]
+  signingkey = ~/.ssh/id_rsa
+[credential]
+  helper = osxkeychain
+[commit]
+  gpgsign = true
+[core]
+  excludesfile = ~/.gitignore
+[gpg]
+  program = /opt/homebrew/bin/gpg
+  format = ssh
+[pager]
+  branch = false
+[alias]
+  oops=git reset HEAD~
+[init]
+  defaultBranch = main

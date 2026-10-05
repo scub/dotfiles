@@ -5,6 +5,7 @@ ASDF_PLUGIN_LIST="""
 awscli
 direnv
 golang
+golangci-lint
 helm
 helm-diff
 helm-docs

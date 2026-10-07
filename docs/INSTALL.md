@@ -34,10 +34,9 @@ gh repo clone scub/dotenv-new $HOME/.dotfiles
 The install script will do the following:
 1. Clones the repo to  `$HOME/.dotfiles`
 2. Set ZSH as default shell
-3. Installs [Homebrew] utility [bundle](../Brewfile), including apps:
+3. Installs [Homebrew] utility [bundle](../tools/Brewfile), including apps:
 	- [Stow] manages system config modules
 	- [Visual Studio Code][VS-Code] for... code
-	- [Tabby] for cross platform terminal
 	- [Granted] for AWS SSO session management
 	- [Glow] to render markdown in shell
 1. Links "stows" to `$HOME` folder, including:

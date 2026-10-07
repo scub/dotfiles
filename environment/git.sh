@@ -20,6 +20,10 @@ alias gpr='git pull --rebase'
 alias gredo="git commit -S --amend --no-edit --reset-author ; git push origin HEAD -f"
 alias gs='git status'
 alias gsu='git status -uno'
+alias gss='git status --short'
+alias gsts='git stash show'
+alias gstsf='git stash show --name-only'
+alias gstr='git stash restore'
 
 # Quick switch git config
 glabconf() {

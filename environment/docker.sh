@@ -16,3 +16,5 @@ dclean() {
 
 # Stop any running containers
 alias dstop="docker ps | tail -n+2 | awk '{ print $NF }' | xargs -n1 docker stop"
+alias dcrm="docker ps -a | tail -n+2 | awk '{ print $NF }' | xargs -n1 docker rm"
+alias dvr="docker volume | tail -n+2 | awk '{ print $NF }' | xargs -n1 docker volume rm"

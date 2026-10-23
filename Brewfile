@@ -1,11 +1,13 @@
-# Primary Brewfile for tooling
-tap "common-fate/granted", trusted: { formula: "granted" }
+# Primary Brewfile for tooling on OSX
+tap "common-fate/granted", trusted: { formula: "granted" } 
 tap "derailed/k9s", trusted: { formula: "k9s" }
 tap "grafana/grafana", trusted: { formula: "gcx" }
 tap "hashicorp/tap", trusted: { formula: "vagrat" }
 tap "int128/kubelogin", trusted: { formula: "kubelogin" }
 brew "act" # local github actions harness
 brew "argocd"
+# Support from brew install is shite
+# brew "asdf"
 brew "autoconf"
 brew "bat"
 brew "chart-testing"
@@ -42,6 +44,7 @@ brew "mtr"
 brew "mysql-client"
 brew "ncurses"
 brew "nmap"
+brew "node"
 brew "nvim"
 brew "postgresql@18"
 brew "pyenv"

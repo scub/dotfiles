@@ -1,21 +1,21 @@
 # Dot Files
 
-Version managed portable development environment configuration.
+Version managed portable environment configuration.
 
 >[!IMPORTANT]
-> This repo contains no personal data or secrets, but some configs may be specific to an org and
-> developer tooling.
+> This repo contains no personal data or secrets, but some configs may be 
+> specific to an org and developer tooling.
 >
-> All modules are linked in [.zshrc](../zsh/.zshrc) and can be disabled to choose which to apply.
+> All modules are linked in [.zshrc](./config/zsh/.zshrc) or [.bashrc](./config/bash/.bashrc) and can be disabled to choose which to apply.
 
 ## Setup
 
-1. Install [PREREQUISITES](./PREREQUISITES.md) before executing install script
-2. Follow [INSTALL](./INSTALL.md) instructions to clone and install default tools
-3. Assign [SECRETS](./SECRETS.md) required for shell and git config
-4. Setup [ASDF](./ASDF.md) for multiple language and version support
-5. Configure [AWS SSO](./AWSSSO.md) profiles for authenticating with AWS
-6. Create [KEYS](./KEYS.md) for SSH and GPG access to git cloud providers
+1. Install [PREREQUISITES](./docs/PREREQUISITES.md) before executing install script
+2. Follow [INSTALL](./docs/INSTALL.md) instructions to clone and install default tools
+3. Assign [SECRETS](./docs/SECRETS.md) required for shell and git config
+4. Setup [ASDF](./docs/ASDF.md) for multiple language and version support
+5. Configure [AWS SSO](./docs/AWSSSO.md) profiles for authenticating with AWS
+6. Create [KEYS](./docs/KEYS.md) for SSH and GPG access to git cloud providers
 
 ## Updating
 

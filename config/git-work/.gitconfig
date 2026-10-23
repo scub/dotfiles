@@ -1,0 +1,7 @@
+
+[pager]
+  branch = false
+[alias]
+  oops=git reset HEAD~
+[init]
+  defaultBranch = main

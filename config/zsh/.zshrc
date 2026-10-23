@@ -1,3 +1,12 @@
+export OS_NAME=$(uname -m)
+
+echo "ON SHELL $0 -- $SHELL"
+
+# Daily history, never deleted
+typeset -g HISTFILE="${ZDOTDIR:-$HOME}/.zsh_history_$(date +'%Y-%m-%d')"
+HISTSIZE=
+SAVEHIST=
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -20,30 +29,46 @@ export PATH=/private/tmp:$PATH
 export PATH=/usr/local/bin:$PATH
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
-export PATH=/opt/homebrew/bin:$PATH
-export PATH=/opt/homebrew/sbin:$PATH
-export PATH=/opt/homebrew/share/google-cloud-sdk/bin:$PATH
+
+case $OS_NAME in
+    Darwin)
+        export PATH=/opt/homebrew/bin:$PATH
+        export PATH=/opt/homebrew/sbin:$PATH
+        export PATH=/opt/homebrew/share/google-cloud-sdk/bin:$PATH
+        ;;
+    Linux)
+        export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
+        export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH
+        ;;
+esac
+
+# ASDF at the top of the path stack
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 export MANPATH=/usr/local/man:$MANPATH
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 # Source secrets lib first
 source $DOTFILES/environment/secret.sh
 
-# OSX: Export dotfiles secrets
+# Export dotfiles secrets
+secret export GIT_NAME --silent
+secret export GIT_EMAIL --silent
+secret export GIT_USERNAME --silent
+secret export HOME_TOWN --silent
+secret export NPM_TOKEN --silent
 uname -s | grep -c "Darwin" >/dev/null && {
-  secret export GIT_NAME --silent
-  secret export GIT_EMAIL --silent
-  secret export GIT_USERNAME --silent
-  secret export HOME_TOWN --silent
   secret export INTERNAL_REG --silent
-  secret export NPM_TOKEN --silent
   secret export ONEP_ENV_ITEM --silent
   secret export ONEP_VAULT --silent
+  secret export QMAN_URL --internal
+  secret export TELEPORT_ENTRY --internal
 }
+
+# Source shell config
+source $DOTFILES/environment/bash.sh
 
 # Source environment extensions
 source $DOTFILES/environment/1pass.sh
-source $DOTFILES/environment/asdf.sh
 source $DOTFILES/environment/aws-helpers.sh
 source $DOTFILES/environment/certs.sh
 source $DOTFILES/environment/docker.sh
@@ -68,4 +93,3 @@ source $DOTFILES/environment/yarn.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 plugins=(asdf)
-

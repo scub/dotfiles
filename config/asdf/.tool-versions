@@ -19,3 +19,4 @@ ruby 3.2.2
 terraform 1.13.3
 terraform-docs 0.22.0
 yarn 1.22.22
+direnv 2.38.2

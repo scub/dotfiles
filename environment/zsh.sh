@@ -26,3 +26,6 @@ fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
 
 # initialise completions with ZSH's compinit
 #autoload -Uz compinit && compinit
+typeset -g HISTFILE="${ZDOTDIR:-$HOME}/.zsh_history_$(date +'%Y-%m-%d')"
+HISTSIZE=
+SAVEHIST=

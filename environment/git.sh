@@ -20,6 +20,10 @@ alias gpr='git pull --rebase'
 alias gredo="git commit -S --amend --no-edit --reset-author ; git push origin HEAD -f"
 alias gs='git status'
 alias gsu='git status -uno'
+alias gss='git status --short'
+alias gsts='git stash show'
+alias gstsf='git stash show --name-only'
+alias gstr='git stash restore'
 
 # Quick switch git config
 glabconf() {
@@ -36,10 +40,20 @@ ghubconf() {
   git config --local gpg.format openpgp
 }
 
+git_current_branch() {
+  git branch | egrep '^\*' | cut -d' ' -f2
+}
+
+git_default_branch() {
+  git branch | egrep -c 'main' >/dev/null \
+    && echo 'main'                        \
+    || echo 'master'
+}
+
 # Pull in our latest git changes
 gu() {
-  CURRENT_BRANCH=$(git branch | egrep '^\*' | cut -d' ' -f2)
-  DEFAULT_BRANCH=$(git branch | egrep -c 'main' >/dev/null && echo 'main' || { git branch | egrep -c 'master' >/dev/null && echo 'master' || echo 'NOT_FOUND'})
+  CURRENT_BRANCH=$(git_current_branch)
+  DEFAULT_BRANCH=$(git_default_branch)
 
   if [ $DEFAULT_BRANCH == "NOT_FOUND" ]; then
     echo "[!] Unable to identify default branch, bailing"
@@ -51,6 +65,6 @@ gu() {
     git checkout $DEFAULT_BRANCH
     git pull origin $DEFAULT_BRANCH
     git checkout $CURRENT_BRANCH
-    git stash pop 
-  fi 
+    git stash pop
+  fi
 }

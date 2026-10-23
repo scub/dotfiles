@@ -60,7 +60,7 @@ brew_install() {
 #
 if [ ! -d "$DOTFILES" ]; then
   echo -e "[+] Cloning DotFiles to $DOTFILES\n"
-  command git clone git@github.com:scub/dotenv-new $DOTFILES 2>/dev/null
+  command git clone git@github.com:scub/dotfiles $DOTFILES 2>/dev/null
   command cd $DOTFILES
 else
   echo -e "[-] DotFiles repo exists at $DOTFILES, pulling latest"

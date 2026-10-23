@@ -19,7 +19,7 @@ This repo is self-installing for consistent cross-machine configuration. [See tu
 Run the install script below.
 
 ```sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/scub/dotenv-new/main/install.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/scub/dotfiles/main/install.sh)"
 ```
 
 OR clone this repo and run it locally

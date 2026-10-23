@@ -1,5 +1,7 @@
 # Set location for brew bundle file
-case $OS_GENERIC in
+OS_GENERIC=$(uname -s)
+ARCH=$(uname -m)
+case ${OS_GENERIC} in
   Darwin)
     HOMEBREW_BUNDLE_FILE="$DOTFILES/Brewfile"
     ;;

@@ -1,5 +1,7 @@
 export OS_NAME=$(uname -m)
 
+echo "ON SHELL $0 -- $SHELL"
+
 # Daily history, never deleted
 typeset -g HISTFILE="${ZDOTDIR:-$HOME}/.zsh_history_$(date +'%Y-%m-%d')"
 HISTSIZE=
